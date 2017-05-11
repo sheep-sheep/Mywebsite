@@ -1,0 +1,7 @@
+2017.05.10 Wed
+1. each method will return a page and you can make lots of changes there
+2. Learnt the trick for link, we can import and jump to different pages by importing different python modules.
+3. Learnt the url(regex, view, kwargs, name) method.
+	(1) these regular expressions do not search GET and POST parameters, or the domain name
+	(2) keyword arguments and Name of the url.
+	
