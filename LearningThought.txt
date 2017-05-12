@@ -4,4 +4,38 @@
 3. Learnt the url(regex, view, kwargs, name) method.
 	(1) these regular expressions do not search GET and POST parameters, or the domain name
 	(2) keyword arguments and Name of the url.
-	
+4. python manage.py runserver
+
+2017.05.11 Thur
+1. A model class is a Table in DB, and each filed under model class will be the columnName.
+2. You¡¯ll use this value in your Python code, and your database will use it as the column name; we can aslo overwrite it with other name
+3. We can define relationship for different tables(models).
+
+4. python manage.py migrate is to initialize the DB.
+5. Each app is connected to the DB by settings.py.
+6. python manage.py makemigrations polls is to make a specific app udpated in Django.
+	The sqlmigrate command doesn¡¯t actually run the migration on your database - it just prints it to the screen so that you can see what SQL Django thinks is 
+
+7. It¡¯s important to add __str__() methods to your models, also a good way to design OOD.
+
+8. Django Model class lookup is just like qztable in Quartz!!
+	Question.objects.get(pub_date__year=current_year)
+	Question.qztable[table.pub_date__year == current_year]
+
+9. 2 related Models have API to access each other.
+
+10. The SYNTAX: # Use double underscores to separate relationships.
+
+
+11. Django provides an auth.py and page to interact with our model.
+
+Steps to add tables:
+	Change your models (in models.py).
+	Run python manage.py makemigrations to create migrations for those changes
+	Run python manage.py migrate to apply those changes to the database.
+
+reason for convience:
+	Django handles the schema creation of DB-- 
+	It provides usefull Shell
+	Django solves the problem of creating a unified interface for site administrators to edit content.
+	Each APP can be pluggalbe, like the poll model can be plug into admin page!
