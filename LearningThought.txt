@@ -51,3 +51,5 @@ In Django, web pages and other content are delivered by views. Each view is repr
 parentheses around a pattern ¡°captures¡± the text matched by that pattern and sends it as an argument to the view function
 
 5. Views can read the template system?! that's so cool
+6. import data/table from .models
+7.So let¡¯s use Django¡¯s template system to separate the design from Python by creating a template that the view can use.
