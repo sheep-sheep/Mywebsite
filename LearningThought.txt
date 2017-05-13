@@ -53,3 +53,14 @@ parentheses around a pattern ¡°captures¡± the text matched by that pattern and s
 5. Views can read the template system?! that's so cool
 6. import data/table from .models
 7.So let¡¯s use Django¡¯s template system to separate the design from Python by creating a template that the view can use.
+
+
+2017.05.13 Sat
+1. Instead of the HttpResponse, we have a shortcut:
+The render() function takes the request object as its first argument, a template name as its second argument and a dictionary as its optional third argument. It returns an HttpResponse object of the given template rendered with the given context.
+2. Different views are connected by the urlPattern
+3. we also have a shortcut for error 404: get_object_or_404
+4. Why do we use a helper function get_object_or_404() instead of automatically catching the ObjectDoesNotExist exceptions at a higher level, or having the model API raise Http404 instead of ObjectDoesNotExist?
+5. Removing hardcoded URLs in templates
+
+6. add namespaces to your URLconf to differentiate between apps.
