@@ -39,3 +39,15 @@ reason for convience:
 	It provides usefull Shell
 	Django solves the problem of creating a unified interface for site administrators to edit content.
 	Each APP can be pluggalbe, like the poll model can be plug into admin page!
+
+2017.05.12 Fri
+1. A view is just like a webpage
+2. Each part you see on a webpage can be implemented by a view class
+In Django, web pages and other content are delivered by views. Each view is represented by a simple Python function
+
+3. URLconfs will hold the elegant urls.
+
+4. it's using regex to take parameters?! No wonder its name is urlpatterns!
+parentheses around a pattern ¡°captures¡± the text matched by that pattern and sends it as an argument to the view function
+
+5. Views can read the template system?! that's so cool
