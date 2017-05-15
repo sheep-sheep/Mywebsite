@@ -78,3 +78,8 @@ The render() function takes the request object as its first argument, a template
 
 8. Abstract and convert view methods into View class?!
 	abstract the concepts of ¡°display a list of objects¡± and ¡°display a detail page for a particular type of object.¡±
+
+
+2017.05.15 Mon
+1. That other developers want to see tests in your software before they take it seriously is yet another reason for you to start writing tests.
+
