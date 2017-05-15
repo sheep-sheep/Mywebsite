@@ -83,3 +83,4 @@ The render() function takes the request object as its first argument, a template
 2017.05.15 Mon
 1. That other developers want to see tests in your software before they take it seriously is yet another reason for you to start writing tests.
 
+2. Django provides a test Client to simulate a user interacting with the code at the view level. We can use it in tests.py or even in the shell.
