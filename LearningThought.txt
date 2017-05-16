@@ -82,5 +82,6 @@ The render() function takes the request object as its first argument, a template
 
 2017.05.15 Mon
 1. That other developers want to see tests in your software before they take it seriously is yet another reason for you to start writing tests.
-
 2. Django provides a test Client to simulate a user interacting with the code at the view level. We can use it in tests.py or even in the shell.
+3. That¡¯s what django.contrib.staticfiles is for: it collects static files from each of your applications (and any other places you specify) into a single location that can easily be served in production.
+4. You should always use relative paths to link your static files between each other, because then you can change STATIC_URL
