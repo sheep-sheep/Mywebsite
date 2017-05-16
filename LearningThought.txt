@@ -85,3 +85,8 @@ The render() function takes the request object as its first argument, a template
 2. Django provides a test Client to simulate a user interacting with the code at the view level. We can use it in tests.py or even in the shell.
 3. That¡¯s what django.contrib.staticfiles is for: it collects static files from each of your applications (and any other places you specify) into a single location that can easily be served in production.
 4. You should always use relative paths to link your static files between each other, because then you can change STATIC_URL
+
+2017.05.16 Tues
+1. Every object with a ForeignKey relationship to another gets this for free. When you click ¡°Add Another¡±, you¡¯ll get a popup window with the ¡°Add question¡± form. 
+2. For that reason, Django offers a tabular way of displaying inline related objects; you just need to change the ChoiceInline declaration to read
+3. We use this approach to teach you how to override templates. In an actual project, you would probably use the django.contrib.admin.AdminSite.site_header attribute to more easily make this particular customization
