@@ -90,3 +90,15 @@ The render() function takes the request object as its first argument, a template
 1. Every object with a ForeignKey relationship to another gets this for free. When you click ¡°Add Another¡±, you¡¯ll get a popup window with the ¡°Add question¡± form. 
 2. For that reason, Django offers a tabular way of displaying inline related objects; you just need to change the ChoiceInline declaration to read
 3. We use this approach to teach you how to override templates. In an actual project, you would probably use the django.contrib.admin.AdminSite.site_header attribute to more easily make this particular customization
+
+2017.05.18 Thurs
+
+A very good feature of Django is, it has the default ability to Edit(Insert, delete) any Model, which is really amazing!
+
+However, we also need a feature to do it in a batch.
+
+Web development is often broad, not deep ¨C problems span many domains. ---- haha , really got my attention and interest.
+
+Django itself is also just a Python package. This means that you can take existing Python packages or Django apps and compose them into your own web project. You only need to write the parts that make your project unique.
+It's like walking into a big toolbox or tool store! you have everything you need to build the world!
+
