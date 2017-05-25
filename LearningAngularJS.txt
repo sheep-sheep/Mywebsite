@@ -7,5 +7,9 @@
 What's the difference between NodeJS and AngularJS?
 
 1. NodeJS is a runtime and you can use it to control backend data using JS.
-2. AngularJS is still a JS and it needs to call PHP to have operations on database.
-3. NodeJS has a tool called NPM which has become one of the most popular libs manager ecosystem.
+2. AngularJS is still a JS and it needs to call PHP(or others) to have operations on database.
+3. Node.js has a tool called NPM which has become one of the most popular libs manager ecosystem.
+4. Node.js is a "platform" rather than a language. The underlying language is JavaScript.
+5. AngularJS is a Javascript frontend framework typically used to make single page applications inside the browse
+6. Angular's requests aren't dependent on the language of your backend API
+7. Node.js has some amazing features and frameworks (such as Express.js)

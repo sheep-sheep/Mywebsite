@@ -102,3 +102,8 @@ Web development is often broad, not deep ¨C problems span many domains. ---- hah
 Django itself is also just a Python package. This means that you can take existing Python packages or Django apps and compose them into your own web project. You only need to write the parts that make your project unique.
 It's like walking into a big toolbox or tool store! you have everything you need to build the world!
 
+2017.05.24 Wed
+1. Django is made for SQL DB, for NoSQL like MongoDB, it will need extra effort and libs to do the work.
+2. After seeing AngularJS, the biggest question is: what's the frontend choice for Django?
+In fact, Django goes for lots of frontend frameworks, i can choose AngularJS now.
+3. And i aslo learnt that Flask is just a lightweight version of Django. it doesn't have the admin for example.
