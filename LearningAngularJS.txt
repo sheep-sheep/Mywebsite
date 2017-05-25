@@ -1,0 +1,11 @@
+2017.05.24 Wed
+1. JS is the frontend language to manipulate the HTML elements.
+2. AngularJS is a JS lib that it has some really nice and convient functions to help you do more trick on html.
+3. AngularJS will increase the development time becasue of the data binding and the useful tools/functions.
+4. AngularJS is different than Node.js
+
+What's the difference between NodeJS and AngularJS?
+
+1. NodeJS is a runtime and you can use it to control backend data using JS.
+2. AngularJS is still a JS and it needs to call PHP to have operations on database.
+3. NodeJS has a tool called NPM which has become one of the most popular libs manager ecosystem.
