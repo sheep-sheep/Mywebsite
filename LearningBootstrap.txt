@@ -1,0 +1,12 @@
+2017.05.23 Tue
+
+1. Bootstrap is nothing but a CSS(cascading style sheet).
+2. It provides the basic theme that you can add them to your page very quickly
+3. It has the basic JS functions to do some anmimations or validations or checks.
+4. You will still need to do coding if you want more customized functions.
+5. It can't interact with Backend server
+
+
+How does it intergrate with Django?
+1. import the CSS file directly
+2. there's a lib called Django-bootstrap? i will spend more time on that
