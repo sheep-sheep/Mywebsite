@@ -1,4 +1,8 @@
 
+0. Following this link to setup EC2 isntance to hold wordpress website.
+    However it has some different settings between the article and today's env.
+    https://www.inkthemes.com/how-to-install-wordpress-on-amazon-aws-ec2/
+
 1. Install the phpmyadmin on Ubuntu
     vim /etc/apache2/apache2.conf
     Add the following to the bottom of the file:
