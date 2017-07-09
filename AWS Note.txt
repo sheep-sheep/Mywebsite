@@ -7,3 +7,6 @@
     Include /etc/phpmyadmin/apache.conf
 
     Then exit and save the file with the command :wq.
+2. apache2 www dir been moved to /var/www/html
+    https://stackoverflow.com/questions/21660621/why-has-the-apache2-www-dir-been-moved-to-var-www-html
+    Summary: Site admins usually place sites in /var/www/site.com and there may be sensitive data in /var/www that should not be made    available via a web server. All web servers on Debian have been updated to use /var/www/html as default instead of /var/www.
