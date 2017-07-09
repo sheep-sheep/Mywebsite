@@ -1,0 +1,9 @@
+
+1. Install the phpmyadmin on Ubuntu
+    vim /etc/apache2/apache2.conf
+    Add the following to the bottom of the file:
+
+    # phpMyAdmin Configuration
+    Include /etc/phpmyadmin/apache.conf
+
+    Then exit and save the file with the command :wq.
