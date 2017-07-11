@@ -11,8 +11,18 @@
     Include /etc/phpmyadmin/apache.conf
 
     Then exit and save the file with the command :wq.
+
 2. apache2 www dir been moved to /var/www/html
     https://stackoverflow.com/questions/21660621/why-has-the-apache2-www-dir-been-moved-to-var-www-html
     Summary: Site admins usually place sites in /var/www/site.com and there may be sensitive data in /var/www that should not be made    available via a web server. All web servers on Debian have been updated to use /var/www/html as default instead of /var/www.
+
 3. Below command allow you to write access to /var/www
     sudo chown -R www-data /var/www
+    
+4. permalinks-only-work-on-plain-setting/
+    In case you are on Ubuntu, edit the file /etc/apache2/apache2.conf (here we have an example of /var/www):
+    <Directory /var/www/>
+            Options Indexes FollowSymLinks
+            AllowOverride None
+            Require all granted
+    </Directory>
