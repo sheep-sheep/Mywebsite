@@ -107,3 +107,9 @@ It's like walking into a big toolbox or tool store! you have everything you need
 2. After seeing AngularJS, the biggest question is: what's the frontend choice for Django?
 In fact, Django goes for lots of frontend frameworks, i can choose AngularJS now.
 3. And i aslo learnt that Flask is just a lightweight version of Django. it doesn't have the admin for example.
+
+2017.05.28 Sun
+1. The index page of Django is a little tricky because it has to be under some apps and put the templates accordingly.
+2. Flask will have more flexible doing that.
+3. In my opinion, flask is more lightweight and its purpose will be more of a local testing.
+4. IMPORTANT: All the experiences are LOCAL DEBUG RUN: Nginx or Apache to serve you static files
