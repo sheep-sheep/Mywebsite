@@ -11,7 +11,7 @@ Welcome to Yang's Blog!
    :caption: Contents:
 
    homepage 
-
+   python_tips
 
 Indices
 ==================

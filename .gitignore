@@ -48,7 +48,8 @@ coverage.xml
 *.pot
 
 # Sphinx documentation
-docs/_build/
+mysite/sphinx/_build/
+
 
 # Virtual env
 env/
