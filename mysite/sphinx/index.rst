@@ -12,6 +12,10 @@ Welcome to Yang's Blog!
 
    homepage 
    python_tips
+   strings
+   numbers
+   cheatsheet
+   thoughts
 
 Indices
 ==================
