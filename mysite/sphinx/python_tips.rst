@@ -14,7 +14,10 @@ The benefits of Enum is:
  * Members will display all the concepts the object hold.
  * Fit the *Group/Desk* defination in work.
  
-Or automatically numbered:
+Bit Operation
+-------------
+
+ * 2**i can be replaced by 1<<i; and + can be replaced by |
  
  #. Item 1
  #. Item 2
