@@ -71,7 +71,8 @@ This is the source code::
                 #. S[:i-1]'s ways + S[i-1:i]
 
 Then the final relationship will be::
-        def numDecodings(self, s):
+
+    def numDecodings(self, s):
         #dp[i] = dp[i-1] if s[i] != "0"
         #       +dp[i-2] if "09" < s[i-1:i+1] < "27"
         if s == '':
@@ -82,4 +83,5 @@ Then the final relationship will be::
                 dp[i] += dp[i-1]
             if i != 1 and '09' < s[i-2:i] < '27':  # this is to handle "10" and "01"ways = 0
                 dp[i] += dp[i-2]
-        return dp[-1]                
+        return dp[-1]
+
