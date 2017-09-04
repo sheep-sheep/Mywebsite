@@ -1,7 +1,13 @@
 Coding Questions - Strings
 ===========================
 This page will collect all the **string** related questions.
- 
+
+Tips in Python
+----------------------------------------
+#. '1'.isdigit() will return True or False
+#. num += num*10 + ('digit'-'0') will convert a string to an integer during the traverse
+
+
 LeeCode 115. Distinct Subsequences
 ----------------------------------------
 
@@ -50,3 +56,30 @@ This is the source code::
         return dp[-1][-1]
 
 
+
+91. Decode Ways
+===========================
+
+:dp[i]:     represents the # of decode ways for string S[:**i-1**], the last char
+:dp[i-1]:   represents the # of decode ways for string S[:**i-2**], the last 2nd char
+:dp[i-2]:   represents the # of decode ways for string S[:**i-3**], the last 3rd char
+
+* if S[i-2:i] is 2 digits, then it has 2 ways:
+                #. S[:i-2]'s ways + S[i-2:i]
+                #. S[:i-1]'s ways + S[i-1:i]
+* if S[i-2:i] isn't 2 digits, then it only has one decode way:
+                #. S[:i-1]'s ways + S[i-1:i]
+
+Then the final relationship will be::
+        def numDecodings(self, s):
+        #dp[i] = dp[i-1] if s[i] != "0"
+        #       +dp[i-2] if "09" < s[i-1:i+1] < "27"
+        if s == '':
+            return 0
+        dp = [1] + [0] * (len(s))
+        for i in range(1, len(s)+1):
+            if s[i-1] != "0":
+                dp[i] += dp[i-1]
+            if i != 1 and '09' < s[i-2:i] < '27':  # this is to handle "10" and "01"ways = 0
+                dp[i] += dp[i-2]
+        return dp[-1]                
