@@ -8,7 +8,7 @@ Tips in Python
 #. num += num*10 + ('digit'-'0') will convert a string to an integer during the traverse
 
 
-LeeCode 115. Distinct Subsequences
+LeetCode 115. Distinct Subsequences
 ----------------------------------------
 
 * empty string is a subsequence of any string but only 1 time
@@ -57,7 +57,7 @@ This is the source code::
 
 
 
-91. Decode Ways
+LeetCode 91. Decode Ways
 ===========================
 
 :dp[i]:     represents the # of decode ways for string S[:**i-1**], the last char

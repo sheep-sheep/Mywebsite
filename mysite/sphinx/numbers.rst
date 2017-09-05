@@ -22,8 +22,52 @@ I was trying to find an efficient way to display all dividors of a natuaral numb
 	# them by pair too.
 
 
-Inline Markup
--------------
-Words can have *emphasis in italics* or be **bold** and you can define
-code samples with back quotes, like when you talk about a command: ``sudo`` 
-gives you super user powers!
+LeetCode 227. Basic Calculator II
+---------------------------------------
+This question is so annoying and if you are using python, you have to be careful about 
+the rounding directions difference between positive and negative numbers
+
+For this question, if you can always work on positive nubmers, then you don't need to consider the rounding issue::
+
+	class Solution(object):
+	    def calculate(self, s):
+	        """
+	        :type s: str
+	        :rtype: int
+	        """
+	        if not s or len(s)==0:
+	            return 0
+
+	        stack = []
+
+	        num = 0
+	        sign = '+'
+
+	        for c in s:
+	            if c.isdigit():
+	                num = num*10 + (ord(c) - ord('0'))
+	            if not c.isdigit() and c != ' ':
+	                # when we check the sign again, we have right number and the left number in the stack
+	                if sign=='-':
+	                    stack.append(-num)
+	                elif sign=='+':
+	                    stack.append(num)
+	                elif sign=='*':
+	                    stack.append(num*stack.pop(-1))
+	                elif sign =='/':
+	                    tmp = stack.pop(-1)
+	                    stack.append(((tmp + (-tmp % num)) // num) if num < 0 or tmp <0 else tmp//num)
+	                sign = c # when this is sign, we have the number at the left
+	                num = 0
+	        # this extra step is for the end of the loop, because when we have the right numer
+	        # the loop has ended, we need one more check for the last element.
+	        if sign == '-':
+	            stack.append(-num)
+	        elif sign == '+':
+	            stack.append(num)
+	        elif sign == '*':
+	            stack.append(num * stack.pop(-1))
+	        elif sign == '/':
+	            tmp = stack.pop(-1)
+	            stack.append(((tmp + (-tmp % num)) // num) if num < 0 or tmp < 0 else tmp // num)
+	        return sum(stack)

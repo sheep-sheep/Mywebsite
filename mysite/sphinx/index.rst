@@ -14,6 +14,7 @@ Welcome to Yang's Blog!
    python_tips
    strings
    numbers
+   trees
    cheatsheet
    thoughts
 

@@ -19,11 +19,36 @@ Bit Operation
 
  * 2**i can be replaced by 1<<i; and + can be replaced by |
  
- #. Item 1
- #. Item 2
  
-Inline Markup
+Division
 -------------
-Words can have *emphasis in italics* or be **bold** and you can define
-code samples with back quotes, like when you talk about a command: ``sudo`` 
-gives you super user powers!
+Python's default division of integers is return the floor (towards negative infinity) with no ability to change that. You can read the BDFL's reason why.
+
+To do 'round up' division, you would use::
+
+	>>> a=1
+	>>> b=2
+	>>> (a+(-a%b))//b
+	1
+	>>> a,b=-1,2
+	>>> (a+(-a%b))//b
+	0
+To do truncation towards zero, and maintain integer division, you use (a+(-a%b))//b if either a or b are negative and the default division if both are positive.
+
+This will do integer division and always round towards zero::
+
+	>>> a=1
+	>>> b=2
+	>>> a//b if a*b>0 else (a+(-a%b))//b
+	0
+	>>> a=-1
+	>>> b=2
+	>>> a//b if a*b>0 else (a+(-a%b))//b
+	0
+	>>> a,b=-3,2
+	>>> a//b if a*b>0 else (a+(-a%b))//b
+	-1
+	>>> a,b=3,2
+	>>> a//b if a*b>0 else (a+(-a%b))//b
+	1
+
