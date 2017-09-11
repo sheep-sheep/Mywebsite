@@ -33,3 +33,7 @@ This is the basic method i should master, the top-down merge_sort implementation
         leftnums = merge_sort(nums[:mid])
         rightnums = merge_sort(nums[mid:])
         return merge(leftnums, rightnums)
+        
+        i write megersort, buble sort, insertion sort and selection sort today.
+        
+        however, computer crashes!!! damn!
