@@ -20,3 +20,19 @@ source::
                     curr = i
                     pairs[j][1], pairs[i][0] = pairs[i][0], pairs[j][1]
         return curr+1
+
+After sorting, the problem has changed. We can use the sorted result to help us on the solution.
+
+I can add some dp logic here::
+
+        if len(pairs) == 1:
+            return 1
+        elif len(pairs) == 2:
+            return 2 if pairs[1][0] > pairs[0][1] else 1
+        else:
+            dp = [(0, [0, 0])]
+            for i, item in enumerate(pairs):
+                dp.append((1, item))
+            for n in (2, len(pairs)+1):
+                dp[n] = (dp[n-1][0]+1, pairs[n-1]) if pairs[n-1][1] > dp[n-2][1][0] else dp[n-2]
+
