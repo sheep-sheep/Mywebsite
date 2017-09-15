@@ -97,3 +97,11 @@ Be careful about the initilization with mulitple states::
                 else:
                     dp[i] = dp[i-1]
             return dp[-1]
+
+
+LeetCode 300. Longest Increasing Subsequence
+---------------------------------------------------
+
+
+491. Increasing Subsequences
+---------------------------------------------------
