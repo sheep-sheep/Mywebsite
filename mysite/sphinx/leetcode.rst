@@ -53,6 +53,7 @@ Then we will just need one variable to hold the state::
                 count += 1
 
 But with above solution i got TLE error which means i need a faster way to sort the list.
+
 I'm thinking about the python map or lambda function::
 
     class Solution(object):
@@ -71,3 +72,28 @@ I'm thinking about the python map or lambda function::
                     curr = pair
                     count += 1
             return count
+    # also because we were sorting x[1], we will need to use x[0] to do check, vice versa.
+
+:dp[i]:        represents the # of chain pairs for Pairs[0, ..., i-2, i-1]
+:dp[i-1]:      represents the # of chain pairs for Pairs[0, ..., i-2]
+
+* dp[i] = dp[i-1] + 1 if Pairs[i-1][0]>last[1] else dp[i-1]
+
+Be careful about the initilization with mulitple states::
+    class Solution(object):
+        def findLongestChain(self, pairs):
+            """
+            :type pairs: List[List[int]]
+            :rtype: int
+            """
+            pairs = sorted(pairs, key=lambda x: x[1])
+            # dp[i] = dp[i-1] + 1 if Pairs[i-1][0]>last[1] else dp[i-1]
+            dp = [0] + [1]*len(pairs)
+            curr = [float('-inf'), float('-inf')] # initialize the dp[0] min pair
+            for i in range(1, len(pairs)+1): # starting with 1 is to make sure Pairs[i-1] is valid
+                if pairs[i - 1][0] > curr[1]:
+                    dp[i] = dp[i-1] + 1
+                    curr = pairs[i - 1]
+                else:
+                    dp[i] = dp[i-1]
+            return dp[-1]

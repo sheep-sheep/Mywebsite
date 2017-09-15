@@ -58,7 +58,7 @@ This is the source code::
 
 
 LeetCode 91. Decode Ways
-===========================
+----------------------------
 
 :dp[i]:     represents the # of decode ways for string S[:**i-1**], the last char
 :dp[i-1]:   represents the # of decode ways for string S[:**i-2**], the last 2nd char
