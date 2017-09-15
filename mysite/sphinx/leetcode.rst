@@ -16,23 +16,58 @@ source::
         curr = 0
         for i in range(len(pairs)):
             for j in range(i+1, len(pairs)):
-                if pairs[j][1] < pairs[j-1][0]:
+                if pairs[j][1] < pairs[i][0]:
                     curr = i
-                    pairs[j][1], pairs[i][0] = pairs[i][0], pairs[j][1]
+                    pairs[j][1], pairs[i][0] = pairs[i][0], pairs[j][1] # problem here! we shouldn't break each pair!
         return curr+1
 
-After sorting, the problem has changed. We can use the sorted result to help us on the solution.
+After sorting, *sort on Pair[0] or Pair[1]* will give us different approach. Now, the problem has changed. We can use the sorted result to help us on the solution.
 
-I can add some dp logic here::
+My initial thought is to use DP, however, i met some difficulties::
 
-        if len(pairs) == 1:
-            return 1
-        elif len(pairs) == 2:
-            return 2 if pairs[1][0] > pairs[0][1] else 1
-        else:
-            dp = [(0, [0, 0])]
-            for i, item in enumerate(pairs):
-                dp.append((1, item))
-            for n in (2, len(pairs)+1):
-                dp[n] = (dp[n-1][0]+1, pairs[n-1]) if pairs[n-1][1] > dp[n-2][1][0] else dp[n-2]
+        # initialize the dp
+        dp = []
+        for i, item in enumerate(pairs):
+            dp.append((1, item))
 
+        for n in range(1, len(pairs)):
+            if n == 1:
+                dp[n] = (2, pairs[1]) if pairs[1][0] > pairs[0][1] else (1, pairs[0])
+            else:
+                dp[n] = (dp[n-1][0]+1, pairs[n]) if pairs[n][0] > dp[n-1][1][1] else dp[n-1]
+        return dp[-1][0]
+
+The above solution doesn't look like a regular DP solution becasue the index and the meaning of DP is not clear.
+
+
+In fact the problem seems much simpler that i thought, you will just need to keep find the element
+that is larger than the last element.
+
+Then we will just need one variable to hold the state::
+
+        curr = pairs[0]
+        count = 1
+        for pair in pairs:
+            if pair[0] > curr[1]:
+                curr = pair
+                count += 1
+
+But with above solution i got TLE error which means i need a faster way to sort the list.
+I'm thinking about the python map or lambda function::
+
+    class Solution(object):
+        def findLongestChain(self, pairs):
+            """
+            :type pairs: List[List[int]]
+            :rtype: int
+            """
+            if not pairs:
+                return 0
+            pairs = sorted(pairs, key=lambda x: x[1])
+            curr = pairs[0]
+            count = 1
+            for pair in pairs:
+                if pair[0] > curr[1]:
+                    curr = pair
+                    count += 1
+            return count
