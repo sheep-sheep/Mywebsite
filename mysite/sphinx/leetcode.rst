@@ -102,6 +102,33 @@ Be careful about the initilization with mulitple states::
 LeetCode 300. Longest Increasing Subsequence
 ---------------------------------------------------
 
+This is more complex than the LongestChainPair problem which can be simplified by sorting the array.
+The hard part of this problem is that the longest subsequence might change according to different current number,
+thus you need to evaluate the whole array again to make sure you can the optimal answer.
 
-491. Increasing Subsequences
+Then the newest logic should be for each value, we need to find the # of values smaller that itself and compare the count::
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        s = []
+        dp = [0] + [1] * len(nums)
+        for i in range(1, len(nums)+1):
+            if not s or nums[i-1] > s[-1]:
+                s.append(nums[i-1])
+                dp[i] = len(s)
+            else:
+                for j in range(len(s)-1, -1, -1):
+                    if nums[i-1] <= s[j]:
+                        end = j
+                tmp = s[:end]+[nums[i-1]]
+                if len(s) <= len(tmp):
+                    s = tmp
+                dp[i] = len(s)
+        return max(dp), s
+
+
+LeetCode 491. Increasing Subsequences
 ---------------------------------------------------
