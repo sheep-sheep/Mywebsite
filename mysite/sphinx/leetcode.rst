@@ -129,6 +129,25 @@ class Solution(object):
                 dp[i] = len(s)
         return max(dp), s
 
+No, it doesn't look right, the real DP should look like:
+* LIS(i) =   1 + max(LIS(j)) if A[i]>A[j] for 1<j<i
+* Or     =   1 if no such j exists.
+
+source code::
+    class Solution(object):
+        def lengthOfLIS(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            dp = [0] + [1]*len(nums)
+            for i in range(1, len(nums)+1):
+                tmp = []
+                for j in range(i - 2, -1, -1):
+                    if nums[i-1] > nums[j] or i==j: # last case is handling 0 pos
+                        tmp.append(dp[j+1])
+                dp[i] = 1 + max(tmp) if tmp else 1
+            return dp[-1]
 
 LeetCode 491. Increasing Subsequences
 ---------------------------------------------------
