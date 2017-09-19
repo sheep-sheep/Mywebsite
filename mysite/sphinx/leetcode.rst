@@ -134,20 +134,51 @@ No, it doesn't look right, the real DP should look like:
 * Or     =   1 if no such j exists.
 
 source code::
+    # this is Recursion
+    class Solution(object):
+        overallMax = 1
+        def lengthOfLIS(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            # according to the description, come up with the solution that use recursion
+            def helper(array, n):
+                # this helper method will return # of LIS ending at n-1
+                if len(array)==1:
+                    return 1
+                currMax = 1
+                for i in range(1, n):
+                    res = helper(array, i)
+                    if array[i-1] < array[n-1] and res+1 > currMax:
+                        currMax = res +1
+
+                self.overallMax = max(self.overallMax, currMax)
+                return currMax
+            if len(nums) == 0:
+                return 0
+            helper(nums, len(nums))
+            return self.overallMax
+
+    # then we can convert this logic to DP
     class Solution(object):
         def lengthOfLIS(self, nums):
             """
             :type nums: List[int]
             :rtype: int
             """
+            # dp[i] denote the # of LIS ending at i-1
             dp = [0] + [1]*len(nums)
+
             for i in range(1, len(nums)+1):
-                tmp = []
-                for j in range(i - 2, -1, -1):
-                    if nums[i-1] > nums[j] or i==j: # last case is handling 0 pos
-                        tmp.append(dp[j+1])
-                dp[i] = 1 + max(tmp) if tmp else 1
-            return dp[-1]
+                currMax = 1
+                for j in range(1, i):
+                    if nums[j-1] < nums[i-1]:
+                        currMax = max(currMax, dp[j] + 1)
+                dp[i] = currMax
+            return max(dp)
+
+It seems that i'm not used to the DP that needs additional operation at each DP step.
 
 LeetCode 491. Increasing Subsequences
 ---------------------------------------------------
