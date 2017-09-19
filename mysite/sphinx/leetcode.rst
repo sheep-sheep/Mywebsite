@@ -201,13 +201,17 @@ Solution is::
             # then add constraints when adding combination
             # filter out the smaller pair
             # BackTracking should have a variable to pass the state?
-            def helper():
-                if len(nums) == 1:
-                    return nums
+            def helper(nums):
                 if len(nums) == 2:
-                    return nums if nums[0]<=nums[1] else nums[::-1]
-                res = set()
-                for num in nums:
-                    res.add()
+                    return nums if nums[1]>=nums[0] else nums[::-1]
+                res = set([])
+                for i in range(len(nums)):
+                    res.add((nums[i],))
+                    for item in helper(nums[i+1:]):
+                        if nums[i]<=item[-1]:
+                            res.add(tuple([nums[i]]) + tuple(item))
+                return res
+
+            return [item for item in helper(nums) if len(item)>1]
 
 
