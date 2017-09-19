@@ -180,5 +180,34 @@ source code::
 
 It seems that i'm not used to the DP that needs additional operation at each DP step.
 
+
+
 LeetCode 491. Increasing Subsequences
 ---------------------------------------------------
+
+# Solution 1, to do a brute force traverse for each situation, you can have a window from 2 to max Len, and fill each element in that
+    window
+
+# Solution 2, it relates to the ending position and it also relates to the number of permutation, ah ha, this is a BackTracking issue and not DP, don't be fooled!
+
+Solution is::
+    class Solution(object):
+        def findSubsequences(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: List[List[int]]
+            """
+            # start with a simple permutation problem
+            # then add constraints when adding combination
+            # filter out the smaller pair
+            # BackTracking should have a variable to pass the state?
+            def helper():
+                if len(nums) == 1:
+                    return nums
+                if len(nums) == 2:
+                    return nums if nums[0]<=nums[1] else nums[::-1]
+                res = set()
+                for num in nums:
+                    res.add()
+
+
