@@ -24,3 +24,6 @@ I need a set of questions to understand the flow of this method::
 	            res.append(s[i]+tmp)
 	    return res
 
+
+
+How do you implement the above method using stack?

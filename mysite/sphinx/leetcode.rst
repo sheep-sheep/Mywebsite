@@ -200,18 +200,40 @@ Solution is::
             # start with a simple permutation problem
             # then add constraints when adding combination
             # filter out the smaller pair
-            # BackTracking should have a variable to pass the state?
+            def checkIncreasing(nums, target):
+                for i in range(1, len(nums)):
+                    if nums[i] < nums[i-1]:
+                        return False
+                return True
+
             def helper(nums):
-                if len(nums) == 2:
-                    return nums if nums[1]>=nums[0] else nums[::-1]
-                res = set([])
+                if len(nums) == 1:
+                    return [nums]
+                res = []
                 for i in range(len(nums)):
-                    res.add((nums[i],))
+                    res.append([nums[i]])
                     for item in helper(nums[i+1:]):
-                        if nums[i]<=item[-1]:
-                            res.add(tuple([nums[i]]) + tuple(item))
+                        if nums[i] <= item[0] and checkIncreasing(item, nums[i]):
+                            res.append([nums[i]] + item)
                 return res
+            res = set([tuple(item) for item in helper(nums) if len(item)>1])
+            return list(res)
 
-            return [item for item in helper(nums) if len(item)>1]
-
+    # Don't need to check each item
+    class Solution(object):
+        def findSubsequences(self, nums):
+            def helper(nums):
+                if len(nums)==1:
+                    return [nums]
+                if len(nums)==2:
+                    return [[nums[0]], [nums[1]], nums] if nums[0]<=nums[1] else [[nums[0]], [nums[1]]]
+                res = []
+                for i in range(len(nums)):
+                    res.append([nums[i]])
+                    for item in helper(nums[i+1:]):
+                        if nums[i] <= item[0]:
+                            res.append([nums[i]] + item)
+                return res
+            res = set([tuple(item) for item in helper(nums) if len(item)>1])
+            return list(res)
 
