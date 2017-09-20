@@ -2,6 +2,37 @@ Coding Questions - Trees
 ===========================
 This page will collect all the **Tree** related questions.
 
+**As most binary tree problems, you want to solve this recursively.**
+
+LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal
+-------------------------------------------------------------------------------
+
+This is my observation of the 2 array::
+    All elements left of root must be in the left subtree and all elements to the right must be in the right subtree.
+
+Source Code::
+    class Solution(object):
+        def buildTree(self, preorder, inorder):
+            """
+            :type preorder: List[int]
+            :type inorder: List[int]
+            :rtype: TreeNode
+            """
+            def helper(preIdx, inStart, inEnd, preorder, inorder):
+                if preIdx > len(preorder)-1 or inStart > inEnd:
+                    return None
+                
+                root = TreeNode(preorder[preIdx])
+                inIdx = inorder.index(preorder[preIdx])
+                root.left = helper(preIdx+1, inStart, inIdx-1, preorder, inorder)
+                root.right = helper(preIdx+inIdx-inStart+1, inIdx+1, inEnd, preorder, inorder)
+                return root
+            
+            return helper(0, 0, len(inorder) - 1, preorder, inorder)
+
+
+
+
 
 LeetCode 208. Implement Trie (Prefix Tree)
 ----------------------------------------------
