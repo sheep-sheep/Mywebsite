@@ -18,18 +18,43 @@ Source Code::
             :type inorder: List[int]
             :rtype: TreeNode
             """
-            def helper(preIdx, inStart, inEnd, preorder, inorder):
-                if preIdx > len(preorder)-1 or inStart > inEnd:
+            # Trick is after we get left node, we will move preorder's pointer by number of nodes in left tree
+            
+            def helper(rootIdx, inStart, inEnd, preOrder, inOrder):
+                if inStart > inEnd or rootIdx > len(preOrder)-1:
                     return None
-                
-                root = TreeNode(preorder[preIdx])
-                inIdx = inorder.index(preorder[preIdx])
-                root.left = helper(preIdx+1, inStart, inIdx-1, preorder, inorder)
-                root.right = helper(preIdx+inIdx-inStart+1, inIdx+1, inEnd, preorder, inorder)
+                root = TreeNode(preOrder[rootIdx])
+                rootInxInOrder = inOrder.index(preOrder[rootIdx])
+                # rootIdx+1, the next one after root in preOrder will be left tree's root
+                # inStart, the first part of inOrder array will be the left tree's begining
+                # rootInxInOrder-1, the ending bound of left tree
+                root.left = helper(rootIdx+1, inStart, rootInxInOrder-1, preOrder, inOrder)
+                # rootIdx+1 + rootInxInOrder-inStart, the next one + size of left tree = right tree's root in preOrder
+                # rootInxInOrder+1, the second part of inOrder array will be the right tree's begining
+                # inEnd, the ending bound of right tree
+                root.right = helper(rootIdx+1+rootInxInOrder-inStart, rootInxInOrder+1, inEnd, preOrder, inOrder)
                 return root
             
-            return helper(0, 0, len(inorder) - 1, preorder, inorder)
+            return helper(0, 0, len(preorder)-1, preorder, inorder))
 
+    class Solution(object):
+        def buildTree(self, inorder, postorder):
+            """
+            :type inorder: List[int]
+            :type postorder: List[int]
+            :rtype: TreeNode
+            """
+            def helper(rootIdx, inStart, inEnd, inorder, postorder):
+                if rootIdx<0 or inStart>inEnd:
+                    return None
+                root = TreeNode(postorder[rootIdx])
+                rootIdxInorder = inorder.index(postorder[rootIdx])
+                root.right = helper(rootIdx-1, rootIdxInorder+1, inEnd, inorder, postorder)
+                root.left = helper(rootIdx-1-(inEnd-rootIdxInorder), inStart, rootIdxInorder-1, inorder, postorder)
+            return helper(len(postorder)-1, 0, len(postorder)-1, inorder, postorder)
+        
+
+Follow up: How do you solve it in iterative way?!!??
 
 
 
