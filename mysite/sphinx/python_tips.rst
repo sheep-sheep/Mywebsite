@@ -52,3 +52,8 @@ This will do integer division and always round towards zero::
 	>>> a//b if a*b>0 else (a+(-a%b))//b
 	1
 
+
+List
+---------------
+
+	* nums[::-1] is creating new list!!!
