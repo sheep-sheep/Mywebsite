@@ -8,6 +8,7 @@ However, the insertion won't help us achieve the max length, it can only
 assure the pairs are in an order.
 
 source::
+
     def findLongestChain(self, pairs):
         """
         :type pairs: List[List[int]]
@@ -21,7 +22,10 @@ source::
                     pairs[j][1], pairs[i][0] = pairs[i][0], pairs[j][1] # problem here! we shouldn't break each pair!
         return curr+1
 
+
 After sorting, *sort on Pair[0] or Pair[1]* will give us different approach. Now, the problem has changed. We can use the sorted result to help us on the solution.
+
+
 
 My initial thought is to use DP, however, i met some difficulties::
 
@@ -43,6 +47,8 @@ The above solution doesn't look like a regular DP solution becasue the index and
 In fact the problem seems much simpler that i thought, you will just need to keep find the element
 that is larger than the last element.
 
+
+
 Then we will just need one variable to hold the state::
 
         curr = pairs[0]
@@ -52,7 +58,11 @@ Then we will just need one variable to hold the state::
                 curr = pair
                 count += 1
 
+
+
 But with above solution i got TLE error which means i need a faster way to sort the list.
+
+
 
 I'm thinking about the python map or lambda function::
 
@@ -74,10 +84,15 @@ I'm thinking about the python map or lambda function::
             return count
     # also because we were sorting x[1], we will need to use x[0] to do check, vice versa.
 
+
+
 :dp[i]:        represents the # of chain pairs for Pairs[0, ..., i-2, i-1]
 :dp[i-1]:      represents the # of chain pairs for Pairs[0, ..., i-2]
 
+
 * dp[i] = dp[i-1] + 1 if Pairs[i-1][0]>last[1] else dp[i-1]
+
+
 
 Be careful about the initilization with mulitple states::
     class Solution(object):
@@ -99,35 +114,38 @@ Be careful about the initilization with mulitple states::
             return dp[-1]
 
 
+
 LeetCode 300. Longest Increasing Subsequence
 ---------------------------------------------------
+
 
 This is more complex than the LongestChainPair problem which can be simplified by sorting the array.
 The hard part of this problem is that the longest subsequence might change according to different current number,
 thus you need to evaluate the whole array again to make sure you can the optimal answer.
 
+
 Then the newest logic should be for each value, we need to find the # of values smaller that itself and compare the count::
-class Solution(object):
-    def lengthOfLIS(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        s = []
-        dp = [0] + [1] * len(nums)
-        for i in range(1, len(nums)+1):
-            if not s or nums[i-1] > s[-1]:
-                s.append(nums[i-1])
-                dp[i] = len(s)
-            else:
-                for j in range(len(s)-1, -1, -1):
-                    if nums[i-1] <= s[j]:
-                        end = j
-                tmp = s[:end]+[nums[i-1]]
-                if len(s) <= len(tmp):
-                    s = tmp
-                dp[i] = len(s)
-        return max(dp), s
+    class Solution(object):
+        def lengthOfLIS(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: int
+            """
+            s = []
+            dp = [0] + [1] * len(nums)
+            for i in range(1, len(nums)+1):
+                if not s or nums[i-1] > s[-1]:
+                    s.append(nums[i-1])
+                    dp[i] = len(s)
+                else:
+                    for j in range(len(s)-1, -1, -1):
+                        if nums[i-1] <= s[j]:
+                            end = j
+                    tmp = s[:end]+[nums[i-1]]
+                    if len(s) <= len(tmp):
+                        s = tmp
+                    dp[i] = len(s)
+            return max(dp), s
 
 No, it doesn't look right, the real DP should look like:
 * LIS(i) =   1 + max(LIS(j)) if A[i]>A[j] for 1<j<i
