@@ -14,7 +14,7 @@ Basic Tree Operations:
     #In-Order Traversal
 
         *Recursive*::
-        
+
             def inorder_recurr(root, res):
                 if root:
                     traverse_recurr(root.left, res)
@@ -107,15 +107,35 @@ Basic Tree Operations:
                 stack.append(root)
                 while stack:
                     node = stack.pop()
-                    stack2.append(node.val) # res.append(node.val) just use another stack to hold the results instead of printing it
-                    if node.right:
-                        stack.append(node.right)
+                    stack2.append(node.val)  # res.append(node.val) just use another stack to hold the results instead of printing it
                     if node.left:
                         stack.append(node.left)
-                for val in stack2:
+                    if node.right:
+                        stack.append(node.right)
+                for val in stack2[::-1]:
                     res.append(val)
                 return res
 
+            def postorder_traverse_stack(root):
+                stack = []
+                res = []
+                while True:
+                    while root:
+                        if root.right:
+                            stack.append(root.right)
+                        stack.append(root)
+                        root = root.left
+                    if not stack:
+                        return res
+                    root = stack.pop()
+                    if root.right and stack and stack[-1] == root.right:
+                        stack.pop()
+                        stack.append(root)
+                        root = root.right
+                    else:
+                        res.append(root.val)
+                        root = None
+                return res
 
 
 
