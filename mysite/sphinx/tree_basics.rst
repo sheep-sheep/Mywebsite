@@ -11,7 +11,7 @@ Basic Tree Operations:
     Just adjust the time to evaluate the node, each recursive method is a stack operation.
     To seperate the inorder and preorder iterative call, just print current value at different time.
 
-    #In-Order Traversal
+    #. In-Order Traversal
 
         *Recursive*::
 
@@ -40,7 +40,7 @@ Basic Tree Operations:
                 return res
 
 
-    #Pre-Order Traversal
+    #. Pre-Order Traversal
 
         *Recursive*::
 
@@ -82,7 +82,7 @@ Basic Tree Operations:
                 return res
 
 
-    #Post-Order Traversal
+    #. Post-Order Traversal
 
     According to oberservation, the post order is just the preorder, put the root after child tree.
     Another interpretation is the print node method is called after stack call.
@@ -139,12 +139,12 @@ Basic Tree Operations:
 
 
 
-    #DFS
+    #. DFS
 
-    *Recursive*
-    *Iterative*
+        *Recursive*
+        *Iterative*
 
-    #BFS
+    #. BFS
 
-    *Recursive*
-    *Iterative*
+        *Recursive*
+        *Iterative*

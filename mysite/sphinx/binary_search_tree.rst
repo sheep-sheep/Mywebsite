@@ -5,55 +5,51 @@ Coding Questions - Binary Serach Tree
 LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal
 -------------------------------------------------------------------------------
 
-This is my observation of the 2 array::
+This is my observation of the 2 array:
     All elements left of root must be in the left subtree and all elements to the right must be in the right subtree.
 
 Source Code::
-    class Solution(object):
-        def buildTree(self, preorder, inorder):
-            """
-            :type preorder: List[int]
-            :type inorder: List[int]
-            :rtype: TreeNode
-            """
-            # Trick is after we get left node, we will move preorder's pointer by number of nodes in left tree
-            
-            def helper(rootIdx, inStart, inEnd, preOrder, inOrder):
-                if inStart > inEnd or rootIdx > len(preOrder)-1:
-                    return None
-                root = TreeNode(preOrder[rootIdx])
-                rootInxInOrder = inOrder.index(preOrder[rootIdx])
-                # rootIdx+1, the next one after root in preOrder will be left tree's root
-                # inStart, the first part of inOrder array will be the left tree's begining
-                # rootInxInOrder-1, the ending bound of left tree
-                root.left = helper(rootIdx+1, inStart, rootInxInOrder-1, preOrder, inOrder)
-                # rootIdx+1 + rootInxInOrder-inStart, the next one + size of left tree = right tree's root in preOrder
-                # rootInxInOrder+1, the second part of inOrder array will be the right tree's begining
-                # inEnd, the ending bound of right tree
-                root.right = helper(rootIdx+1+rootInxInOrder-inStart, rootInxInOrder+1, inEnd, preOrder, inOrder)
-                return root
-            
-            return helper(0, 0, len(preorder)-1, preorder, inorder))
 
-    class Solution(object):
-        def buildTree(self, inorder, postorder):
-            """
-            :type inorder: List[int]
-            :type postorder: List[int]
-            :rtype: TreeNode
-            """
-            def helper(rootIdx, inStart, inEnd, inorder, postorder):
-                if rootIdx<0 or inStart>inEnd:
-                    return None
-                root = TreeNode(postorder[rootIdx])
-                rootIdxInorder = inorder.index(postorder[rootIdx])
-                root.right = helper(rootIdx-1, rootIdxInorder+1, inEnd, inorder, postorder)
-                root.left = helper(rootIdx-1-(inEnd-rootIdxInorder), inStart, rootIdxInorder-1, inorder, postorder)
-            return helper(len(postorder)-1, 0, len(postorder)-1, inorder, postorder)
+        class Solution(object):
+            def buildTree(self, preorder, inorder):
+                # Trick is after we get left node, we will move preorder's pointer by number of nodes in left tree
+                
+                def helper(rootIdx, inStart, inEnd, preOrder, inOrder):
+                    if inStart > inEnd or rootIdx > len(preOrder)-1:
+                        return None
+                    root = TreeNode(preOrder[rootIdx])
+                    rootInxInOrder = inOrder.index(preOrder[rootIdx])
+                    # rootIdx+1, the next one after root in preOrder will be left tree's root
+                    # inStart, the first part of inOrder array will be the left tree's begining
+                    # rootInxInOrder-1, the ending bound of left tree
+                    root.left = helper(rootIdx+1, inStart, rootInxInOrder-1, preOrder, inOrder)
+                    # rootIdx+1 + rootInxInOrder-inStart, the next one + size of left tree = right tree's root in preOrder
+                    # rootInxInOrder+1, the second part of inOrder array will be the right tree's begining
+                    # inEnd, the ending bound of right tree
+                    root.right = helper(rootIdx+1+rootInxInOrder-inStart, rootInxInOrder+1, inEnd, preOrder, inOrder)
+                    return root
+                
+                return helper(0, 0, len(preorder)-1, preorder, inorder))
+
+        class Solution(object):
+            def buildTree(self, inorder, postorder):
+                """
+                :type inorder: List[int]
+                :type postorder: List[int]
+                :rtype: TreeNode
+                """
+                def helper(rootIdx, inStart, inEnd, inorder, postorder):
+                    if rootIdx<0 or inStart>inEnd:
+                        return None
+                    root = TreeNode(postorder[rootIdx])
+                    rootIdxInorder = inorder.index(postorder[rootIdx])
+                    root.right = helper(rootIdx-1, rootIdxInorder+1, inEnd, inorder, postorder)
+                    root.left = helper(rootIdx-1-(inEnd-rootIdxInorder), inStart, rootIdxInorder-1, inorder, postorder)
+                return helper(len(postorder)-1, 0, len(postorder)-1, inorder, postorder)
+
 
 
 Follow up: How do you solve it in iterative way?!!??
-
 
 
 
