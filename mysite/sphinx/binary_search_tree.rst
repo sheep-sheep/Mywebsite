@@ -1,30 +1,5 @@
-Coding Questions - Trees
-===========================
-This page will collect all the **Tree** related questions.
-
-**As most binary tree problems, you want to solve this recursively.**
-
-LeetCode 145. Binary Tree Postorder Traversal
--------------------------------------------------------------------------------
-
-Basic Tree Operations:
-    #In-Order Traversal
-    *Recursive
-    *Iterative
-    #Pre-Order Traversal
-    *Recursive
-    *Iterative
-    #Post-Order Traversal
-    *Recursive
-    *Iterative
-    #DFS
-    *Recursive
-    *Iterative
-    #BFS
-    *Recursive
-    *Iterative
-
-
+Coding Questions - Binary Serach Tree
+=========================================
 
 
 LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal
