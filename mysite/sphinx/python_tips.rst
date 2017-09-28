@@ -18,7 +18,7 @@ Bit Operation
 -------------
 
  * 2**i can be replaced by 1<<i; and + can be replaced by |
- * m/2 can be replaced by m>>2
+ * m/2 can be replaced by m>>1
  
  
 Division
