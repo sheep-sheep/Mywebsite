@@ -18,6 +18,7 @@ Bit Operation
 -------------
 
  * 2**i can be replaced by 1<<i; and + can be replaced by |
+ * m/2 can be replaced by m>>2
  
  
 Division
@@ -57,3 +58,13 @@ List
 ---------------
 
 	* nums[::-1] is creating new list!!!
+
+
+Built-In
+-----------------
+	
+	* sorted::
+		sorted(iterable[, cmp[, key[, reverse]]])
+
+
+	https://docs.python.org/2/library/functions.html#sorted

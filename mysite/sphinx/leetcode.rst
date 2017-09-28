@@ -196,7 +196,39 @@ source code::
                 dp[i] = currMax
             return max(dp)
 
+    # Could you improve it to O(n log n) time complexity?
+    
 It seems that i'm not used to the DP that needs additional operation at each DP step.
+
+
+
+LeetCode 354. Russian Doll Envelopes
+---------------------------------------------------
+There're 2 tips learnt from this question:
+    #. sorted built-in method
+    #. the binary search method for LIS problem
+
+
+Naive and final solution are as followings::
+    class Solution(object):
+        def maxEnvelopes(self, envelopes):
+            # [3, 4] cannot contains [3, 3], so we need to put [3, 4] before [3, 3] when sorting, 
+            # otherwise it will be counted as an increasing number if the order is [3, 3], [3, 4]
+            nums = sorted(envelopes, key = lambda x: (x[0], -x[1])) # sorted will create a new list
+            
+            # dp[i] denote the # of LIS ending at i-1
+            dp = [0] + [1]*len(nums)
+            # The LIS DP solution got TLE, i need to use Binary Search solution.
+            for i in range(1, len(nums)+1):
+                currMax = 1
+                for j in range(1, i):
+                    if nums[j-1][1] < nums[i-1][1]:
+                        currMax = max(currMax, dp[j] + 1)
+                dp[i] = currMax
+            return max(dp)
+
+
+    
 
 
 
