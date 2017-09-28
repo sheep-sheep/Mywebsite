@@ -215,7 +215,7 @@ source code::
                 dp[pos] = num
                 res = max(pos + 1, res) # will always record the max pos of tails
             return res
-            
+
 It seems that i'm not used to the DP that needs additional operation at each DP step.
 
 
@@ -304,4 +304,7 @@ Solution is::
                 return res
             res = set([tuple(item) for item in helper(nums) if len(item)>1])
             return list(res)
+
+
+
 
