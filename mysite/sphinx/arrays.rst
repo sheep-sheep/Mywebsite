@@ -67,6 +67,7 @@ My initial solution with failures::
 
 
 The expected solution::
+
         class Solution(object):
             def rotate(self, nums, k):
                 def reverseInPlace(nums, start, end):

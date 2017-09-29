@@ -1,6 +1,15 @@
 Coding Questions - Binary Serach Tree
 =========================================
 
+LeetCode 297. Serialize and Deserialize Binary Tree
+--------------------------------------------------------------
+
+I will use this question to practise all Binary Tree related questions, and i can practice the possible way to
+construct a Binary Tree.
+
+In fact, it'related, if you can pass 2 orders of traversal, then you can definitely recover the tree without knowing
+any other properties!
+
 
 LeetCode 105. Construct Binary Tree from Preorder and Inorder Traversal
 -------------------------------------------------------------------------------
