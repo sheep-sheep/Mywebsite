@@ -146,5 +146,42 @@ Basic Tree Operations:
 
     #. BFS
 
-        *Recursive*
-        *Iterative*
+        *Recursive*::
+            # If you want to use recursive, you have to find the right varaible to pass between
+            # different values
+
+            # the list that passes between levels are final list
+            # find the statement to update that final list
+            def recursive(res, root, level):
+                if not root:
+                    return
+                if level < len(res):
+                    res[level].append(root.val)
+                else:
+                    res.append([root.val])
+                recursive(res, root.left, level+1)
+                recursive(res, root.right, level+1)
+
+
+        *Iterative*：：
+            def BFS(self, root):
+                if not root:
+                    return []
+                final = []
+                queue = []
+                queue.append(root)
+                while queue:
+                    res = []
+                    # we have queue and we need to get each level
+                    # this is done by get the size of queue which is the size of the level
+                    n = len(queue)
+                    while(n):
+                        node = queue.pop(0)    
+                        res.append(node.val)
+                        if node.left:
+                            queue.append(node.left)
+                        if node.right:
+                            queue.append(node.right)
+                        n -= 1
+                    final.append(res)
+                return final
