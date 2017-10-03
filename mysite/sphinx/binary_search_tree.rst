@@ -205,3 +205,27 @@ We have 2 Iterative ways to do the traversal:
             res=[]
         return final
 
+
+
+LeetCode 108. Convert Sorted Array to Binary Search Tree
+------------------------------------------------------------
+
+This concept is about **Balanced BST**
+If you want the tree to be balanced, then always choose the mid value as the root::
+        class Solution(object):
+            def sortedArrayToBST(self, nums):
+                """
+                :type nums: List[int]
+                :rtype: TreeNode
+                """
+                def helper(nums, lo, hi):
+                    if lo > hi:
+                        return None
+                    mid = lo + (hi-lo)/2
+                    node = TreeNode(nums[mid])
+                    node.left = helper(nums, lo, mid-1)
+                    node.right = helper(nums, mid+1, hi)
+                    return node
+                return helper(nums, 0, len(nums)-1)
+                
+

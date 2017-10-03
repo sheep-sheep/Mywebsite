@@ -138,12 +138,6 @@ Basic Tree Operations:
                 return res
 
 
-
-    #. DFS
-
-        *Recursive*
-        *Iterative*
-
     #. BFS
 
         *Recursive*::
