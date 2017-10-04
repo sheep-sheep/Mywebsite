@@ -61,6 +61,32 @@ Source Code::
 Follow up: How do you solve it in iterative way?!!??
 
 
+LeetCode 109. Convert Sorted List to Binary Search Tree
+-------------------------------------------------------------------------------
+This problem we can have 2 approaches:
+    #. Build the tree directly
+    #. Build a tree and then make it height balanced
+
+
+
+**What is Height Balanced BST?**
+With the BST property, if you keep inserting ascending numbers to the tree, it's probably a leaned tree with no branches which
+will make all the search hit work case.
+This can be avoid by using a method called *height balancing*, sometimes called *AVL trees*.
+
+**Height**
+Height of a leaf:       1
+Height of a tree:       root's height
+Height of a empty tree: 0
+
+
+**Height-balancing requirement**
+A node in a tree is height-balanced if the heights of its subtrees differ by no more than 1. (That is, if the subtrees have heights h1 and h2, then |h1 − h2| ≤ 1.) A tree is height-balanced if all of its nodes are height-balanced. (An empty tree is height-balanced by definition.)
+
+**Rotation**
+    #. zig-zig: single rotation
+    #. zig-zag: double rotation(just call a single-rotation function twice)
+    #. insert a new node and then check from bottom to root to make sure each sub-tree meets the requirement
 
 LeetCode 208. Implement Trie (Prefix Tree)
 ----------------------------------------------
