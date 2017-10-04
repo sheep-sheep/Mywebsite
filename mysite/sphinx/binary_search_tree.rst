@@ -67,6 +67,34 @@ This problem we can have 2 approaches:
     #. Build the tree directly
     #. Build a tree and then make it height balanced
 
+Forget about the 2nd solution, just using linked list, we need to find the middle of linked list.
+
+Using 2 pointers, **SPEED** is different::
+        class Solution(object):
+            def sortedListToBST(self, head):
+                if not head:
+                    return 
+                if not head.next:
+                    return TreeNode(head.val)
+                # here we get the middle point,
+                # even case, like '1234', slow points to '2',
+                # '3' is root, '12' belongs to left, '4' is right
+                # odd case, like '12345', slow points to '2', '12'
+                # belongs to left, '3' is root, '45' belongs to right
+                slow, fast = head, head.next.next
+                while fast and fast.next:
+                    fast = fast.next.next
+                    slow = slow.next
+                # tmp points to root
+                tmp = slow.next
+                # cut down the left child
+                slow.next = None
+                root = TreeNode(tmp.val)
+                root.left = self.sortedListToBST(head)
+                root.right = self.sortedListToBST(tmp.next)
+                return root
+
+
 
 
 **What is Height Balanced BST?**
@@ -87,6 +115,9 @@ A node in a tree is height-balanced if the heights of its subtrees differ by no 
     #. zig-zig: single rotation
     #. zig-zag: double rotation(just call a single-rotation function twice)
     #. insert a new node and then check from bottom to root to make sure each sub-tree meets the requirement
+
+**AVL trees**
+Trees which remain balanced - and thus guarantee O(logn) search times - in a dynamic environment. Or more importantly, since any tree can be re-balanced - but at considerable cost - can be re-balanced in O(logn) time.    
 
 LeetCode 208. Implement Trie (Prefix Tree)
 ----------------------------------------------
