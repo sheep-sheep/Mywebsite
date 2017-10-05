@@ -1,29 +1,15 @@
 Coding Questions - Linked List
 =========================================
 
+Find the middle of a given linked list
+----------------------------------------------
+
 **Two Pointers**, this is a very useful trick to deal with linked list problems.
 
-LeetCode 109. Convert Sorted List to Binary Search Tree
-----------------------------------------------------------
-
-This is using the 2 pointers to operate the linked list::
-        class Solution(object):
-            def sortedListToBST(self, head):
-
-                import copy
-                if not head:
-                    return None
-                def helper(head, tail):
-                    slow = copy.copy(head)
-                    fast = copy.copy(head)
-                    if head==tail:
-                        return None
-                    while(fast != tail and fast.next != tail):
-                        fast = fast.next.next
-                        slow = slow.next
-                    midroot = TreeNode(slow.val)
-                    midroot.left = helper(head, slow)
-                    midroot.right = helper(slow.next, tail)
-                    return midroot
-                
-                return helper(head, None)
+    #. Method 1:
+        Traverse linked list using two pointers. Move one pointer by one and other pointer by two. 
+        When the fast pointer reaches end slow pointer will reach middle of the linked list.
+    #. Method 2:
+        Initialize mid element as head and initialize a counter as 0. Traverse the list from head, while 
+        traversing increment the counter and change mid to mid->next whenever the counter is odd. 
+        So the mid will move only half of the total length of the list.

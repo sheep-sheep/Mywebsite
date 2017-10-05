@@ -119,6 +119,30 @@ A node in a tree is height-balanced if the heights of its subtrees differ by no 
 **AVL trees**
 Trees which remain balanced - and thus guarantee O(logn) search times - in a dynamic environment. Or more importantly, since any tree can be re-balanced - but at considerable cost - can be re-balanced in O(logn) time.    
 
+
+LeetCode 113. Path Sum II
+---------------------------------------
+
+We have 2 solutions and we need to learn how to print all paths from root to leaf::
+
+        class Solution(object):
+            def pathSum(self, root, val):
+                if not root:
+                    return []
+                def helper(root, sum, ls, res):
+                    if not root.left and not root.right and sum == root.val:
+                        ls.append(root.val)
+                        res.append(ls)
+                    if root.left:
+                        helper(root.left, sum-root.val, ls+[root.val], res)
+                    if root.right:
+                        helper(root.right, sum-root.val, ls+[root.val], res)
+                res = []
+                paths = []
+                helper(root, val, paths, res)
+                return res
+
+
 LeetCode 208. Implement Trie (Prefix Tree)
 ----------------------------------------------
 
