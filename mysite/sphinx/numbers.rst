@@ -17,6 +17,20 @@ Given a positive integer, check whether it has alternating bits or not::
 		            n /=2
 		        return True
 
+		def convertBinary(n):
+		    res = []
+		    while n:
+		        res.append('1' if n%2 else '0')
+		        n >>= 1
+		    return ''.join(res[::-1])
+
+		def dfsConvert(n):
+		    if n==1:
+		        return '1'
+		    elif n == 0:
+		        return 0
+		    else:
+		        return dfsConvert(n/2) + '1' if n%2 else dfsConvert(n/2) + '0'
 
 Find all divisors of a natural number
 ----------------------------------------
