@@ -1,7 +1,23 @@
 Coding Questions - Numbers
 ===========================
 This page will collect all the number related questions.
- 
+
+Bit Operations
+-----------------------
+Given a positive integer, check whether it has alternating bits or not::
+		class Solution(object):
+		    def hasAlternatingBits(self, n):
+		        first = n%2
+		        n /= 2
+		        while n:
+		            if first == n%2:
+		                return False
+		            else:
+		                first = n%2
+		            n /=2
+		        return True
+
+
 Find all divisors of a natural number
 ----------------------------------------
 
