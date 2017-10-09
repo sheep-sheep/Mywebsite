@@ -27,9 +27,20 @@ Char
  	>>> 'a'*-1
  	''
 
- 
+Understanding the map function
+--------------------------------------
 
- 
+
+Maximum recursion depth exceeded 
+-------------------------------------
+
+It is a guard against a stack overflow, yes. Python (or rather, the CPython implementation) doesn't optimize tail recursion, and unbridled recursion causes stack overflows. You can change the recursion limit with sys.setrecursionlimit, but doing so is dangerous -- the standard limit is a little conservative, but Python stackframes can be quite big.
+
+Python isn't a functional language and tail recursion is not a particularly efficient technique. **Rewriting the algorithm iteratively**, if possible, is generally a better idea.
+
+<https://stackoverflow.com/questions/3323001/what-is-the-maximum-recursion-depth-in-python-and-how-to-increase-it>
+
+
 Division
 -------------
 Python's default division of integers is return the floor (towards negative infinity) with no ability to change that. You can read the BDFL's reason why.
