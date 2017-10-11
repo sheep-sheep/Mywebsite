@@ -70,6 +70,7 @@ This problem we can have 2 approaches:
 Forget about the 2nd solution, just using linked list, we need to find the middle of linked list.
 
 Using 2 pointers, **SPEED** is different::
+
         class Solution(object):
             def sortedListToBST(self, head):
                 if not head:
@@ -109,7 +110,8 @@ Height of a empty tree: 0
 
 
 **Height-balancing requirement**
-A node in a tree is height-balanced if the heights of its subtrees differ by no more than 1. (That is, if the subtrees have heights h1 and h2, then |h1 − h2| ≤ 1.) A tree is height-balanced if all of its nodes are height-balanced. (An empty tree is height-balanced by definition.)
+A node in a tree is height-balanced if the heights of its subtrees differ by no more than 1. 
+(That is, if the subtrees have heights h1 and h2, then |h1 − h2| ≤ 1.) A tree is height-balanced if all of its nodes are height-balanced. (An empty tree is height-balanced by definition.)
 
 **Rotation**
     #. zig-zig: single rotation
@@ -123,24 +125,64 @@ Trees which remain balanced - and thus guarantee O(logn) search times - in a dyn
 LeetCode 113. Path Sum II
 ---------------------------------------
 
-We have 2 solutions and we need to learn how to print all paths from root to leaf::
+The core idea of this problem is to print out all root-to-leaf path during the traversal::
 
-        class Solution(object):
-            def pathSum(self, root, val):
-                if not root:
-                    return []
-                def helper(root, sum, ls, res):
-                    if not root.left and not root.right and sum == root.val:
-                        ls.append(root.val)
-                        res.append(ls)
-                    if root.left:
-                        helper(root.left, sum-root.val, ls+[root.val], res)
-                    if root.right:
-                        helper(root.right, sum-root.val, ls+[root.val], res)
-                res = []
-                paths = []
-                helper(root, val, paths, res)
-                return res
+        final = []
+        def paths(root, res):
+            if root:
+                if not root.left and not root.right:  # this is the leaf node
+                    final.append(res + [root.val])
+                else:
+                    # here we have to create 2 different lists
+                    # res.append(root.val)
+                    paths(root.left, res+[root.val])
+                    paths(root.right, res+[root.val])
+
+
+Or we can remove the global variable and pass it along the call::
+
+        def paths_dfs(root, tmp, res):
+            if not root.left and not root.right:
+                res.append(tmp + [root.val])
+            if root.left:
+                paths_dfs(root.left, tmp+[root.val], res)
+            if root.right:
+                paths_dfs(root.right, tmp+[root.val], res)
+
+After we have the recursive solution, convert it to Iterative using stack::
+
+        # since stack only can record the level, we need one more stack to get the paths
+        def paths_stack(root):
+            stack = [(root, [root.val])]
+            res = []
+            while stack:
+                node, tmp = stack.pop()
+                if not node.left and not node.right:
+                    res.append(tmp)
+                if node.left:
+                    stack.append((node.left, tmp + [node.left.val]))
+                if node.right:
+                    stack.append((node.right, tmp + [node.right.val]))
+            return res
+
+And you have to know how to solve it using Queue::
+
+        def paths_queue(root):
+            queue = [(root, [root.val])]
+            res = []
+            while queue:
+                n = len(queue)
+                while n:
+                    node, tmp = queue.pop(0)
+                    n -= 1
+                    if not node.left and not node.right:
+                        res.append(tmp)
+                    if node.left:
+                        queue.append((node.left, tmp+[node.left.val]))
+                    if node.right:
+                        queue.append((node.right, tmp + [node.right.val]))
+            return res
+
 
 
 LeetCode 208. Implement Trie (Prefix Tree)
@@ -293,6 +335,7 @@ LeetCode 108. Convert Sorted Array to Binary Search Tree
 
 This concept is about **Balanced BST**
 If you want the tree to be balanced, then always choose the mid value as the root::
+
         class Solution(object):
             def sortedArrayToBST(self, nums):
                 """
@@ -309,60 +352,3 @@ If you want the tree to be balanced, then always choose the mid value as the roo
                     return node
                 return helper(nums, 0, len(nums)-1)
                 
-
-LeetCode 113. Path Sum II
-------------------------------------------------------------
-
-The core idea of this problem is to print out all root-to-leaf path during the traversal::
-        final = []
-        def paths(root, res):
-            if root:
-                if not root.left and not root.right:  # this is the leaf node
-                    final.append(res + [root.val])
-                else:
-                    # here we have to create 2 different lists
-                    # res.append(root.val)
-                    paths(root.left, res+[root.val])
-                    paths(root.right, res+[root.val])
-
-
-Or we can remove the global variable and pass it along the call::
-        def paths_dfs(root, tmp, res):
-            if not root.left and not root.right:
-                res.append(tmp + [root.val])
-            if root.left:
-                paths_dfs(root.left, tmp+[root.val], res)
-            if root.right:
-                paths_dfs(root.right, tmp+[root.val], res)
-
-After we have the recursive solution, convert it to Iterative using stack::
-        # since stack only can record the level, we need one more stack to get the paths
-        def paths_stack(root):
-            stack = [(root, [root.val])]
-            res = []
-            while stack:
-                node, tmp = stack.pop()
-                if not node.left and not node.right:
-                    res.append(tmp)
-                if node.left:
-                    stack.append((node.left, tmp + [node.left.val]))
-                if node.right:
-                    stack.append((node.right, tmp + [node.right.val]))
-            return res
-
-And you have to know how to solve it using Queue::
-        def paths_queue(root):
-            queue = [(root, [root.val])]
-            res = []
-            while queue:
-                n = len(queue)
-                while n:
-                    node, tmp = queue.pop(0)
-                    n -= 1
-                    if not node.left and not node.right:
-                        res.append(tmp)
-                    if node.left:
-                        queue.append((node.left, tmp+[node.left.val]))
-                    if node.right:
-                        queue.append((node.right, tmp + [node.right.val]))
-            return res
