@@ -310,3 +310,59 @@ If you want the tree to be balanced, then always choose the mid value as the roo
                 return helper(nums, 0, len(nums)-1)
                 
 
+LeetCode 113. Path Sum II
+------------------------------------------------------------
+
+The core idea of this problem is to print out all root-to-leaf path during the traversal::
+        final = []
+        def paths(root, res):
+            if root:
+                if not root.left and not root.right:  # this is the leaf node
+                    final.append(res + [root.val])
+                else:
+                    # here we have to create 2 different lists
+                    # res.append(root.val)
+                    paths(root.left, res+[root.val])
+                    paths(root.right, res+[root.val])
+
+
+Or we can remove the global variable and pass it along the call::
+        def paths_dfs(root, tmp, res):
+            if not root.left and not root.right:
+                res.append(tmp + [root.val])
+            if root.left:
+                paths_dfs(root.left, tmp+[root.val], res)
+            if root.right:
+                paths_dfs(root.right, tmp+[root.val], res)
+
+After we have the recursive solution, convert it to Iterative using stack::
+        # since stack only can record the level, we need one more stack to get the paths
+        def paths_stack(root):
+            stack = [(root, [root.val])]
+            res = []
+            while stack:
+                node, tmp = stack.pop()
+                if not node.left and not node.right:
+                    res.append(tmp)
+                if node.left:
+                    stack.append((node.left, tmp + [node.left.val]))
+                if node.right:
+                    stack.append((node.right, tmp + [node.right.val]))
+            return res
+
+And you have to know how to solve it using Queue::
+        def paths_queue(root):
+            queue = [(root, [root.val])]
+            res = []
+            while queue:
+                n = len(queue)
+                while n:
+                    node, tmp = queue.pop(0)
+                    n -= 1
+                    if not node.left and not node.right:
+                        res.append(tmp)
+                    if node.left:
+                        queue.append((node.left, tmp+[node.left.val]))
+                    if node.right:
+                        queue.append((node.right, tmp + [node.right.val]))
+            return res
