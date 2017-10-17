@@ -53,3 +53,6 @@ mysite/sphinx/_build/
 
 # Virtual env
 env/
+
+# Pycharm folder
+.idea/
