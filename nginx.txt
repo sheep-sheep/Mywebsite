@@ -1,0 +1,7 @@
+1. Install Nginx tip:
+a. wget -qO - https://nginx.org/keys/nginx_signing.key | sudo apt-key add -
+b. /etc/apt/sources.list file:
+	deb http://nginx.org/packages/ubuntu/ codename nginx
+	deb-src http://nginx.org/packages/ubuntu/ codename nginx
+c. apt-get update
+   apt-get install nginx
