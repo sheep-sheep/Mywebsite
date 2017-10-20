@@ -108,10 +108,15 @@ You have to master the most used techniques and be able to apply them on
         Always keep in mind that Graph is consisted by *Vertex* and *Edge*.
 
         Running time is **O(V+E)**.
-        
+
         * DFS
             * Property
-                * During search, we can set 2 timestemp v.d and v.f to indicate first discover and blacken the vertex
+                * During search, we can set 2 timestemp v.d and v.f to indicate first discover and blacken the vertex.
+                * **Parenthesis structure**.
+                * First explore an edge (u, v):
+                    + WHITE indicates a tree edge
+                    + GRAY indicates a back edge
+                    + BLACK indicates a forward or cross edge
 
             * Recursive
 

@@ -19,8 +19,15 @@ The most used or nataural way is to use *Adjacency lists*:
 
             .. image:: images/adjlists.png
 
+Or we can use OOD concept to store vertex information.
 
-**Topological Sorting**: Topological Sorting for a graph is not possible if the graph is not a DAG.
+
+**Topological Sort**: Topological Sorting for a graph is not possible if the graph is not a DAG.
+
+An ordering of its *vertices* along a horizontal line so that all directed *edges* go from left to right.
+
+1. Doing with DFS::
+2. Doing with BFS::
 
 
 
