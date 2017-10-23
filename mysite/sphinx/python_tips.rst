@@ -89,7 +89,7 @@ Built-In
 
     * defaultdict
         Using list as the default_factory, it is easy to group a sequence of key-value pairs into a dictionary of lists::
-
+            >>> from collections import defaultdict
             >>> s = [('yellow', 1), ('blue', 2), ('yellow', 3), ('blue', 4), ('red', 1)]
             >>> d = defaultdict(list)
             >>> for k, v in s:
