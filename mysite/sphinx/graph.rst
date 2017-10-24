@@ -44,8 +44,8 @@ Or saying from `website`__ this prerequisite relationship reminds one of directe
 of the courses, which would be a DAG if it has a valid order.
 
 This problem can be solved in 3 different ways:
-#. Detecting a cycle BFS/DFS.
-#. Using topological sort
+#. Detecting a cycle DFS.(Don't use BFS)
+#. Using topological sort. (BFS/DFS)
 #. Union-Find?
 
 
@@ -71,7 +71,7 @@ DFS::
                     for i in range(numCourses):
                         graph[i]
                     for edge in edgelists:
-                        graph[edge[0]].append(edge[1])
+                        graph[edge[1]].append(edge[0])
                     return graph
                 
                 graph = buildGraph(graph, numCourses, prerequisites)
@@ -97,41 +97,20 @@ DFS::
                 return self.circle == 0
 
 
-BFS::
+BFS:
+    In fact, BFS **cannot** be simply used as an edge detection paradigm, here're some reasons:
 
-        class Solution(object):
-            def canFinish(self, numCourses, prerequisites):
-                """
-                :type numCourses: int
-                :type prerequisites: List[List[int]]
-                :rtype: bool
-                """
-                from collections import defaultdict
-                graph = defaultdict(list)
-                def buildGraph(graph, numCourses, edgelists):
-                    for i in range(numCourses):
-                        graph[i]
-                    for edge in edgelists:
-                        graph[edge[0]].append(edge[1])
-                    return graph
-                graph = buildGraph(graph, numCourses, prerequisites)
-                WHITE = 1
-                BLACK = 2
-                GREY = 3
-                visited = [WHITE for _ in range(numCourses)]
-                circle = 0
-                
-                queue = [0]
-                visited[0] = GREY
-                while queue:
-                    vertex = queue.pop(0)
-                    for adj_vertex in graph[vertex]:
-                        if visited[adj_vertex] == WHITE:
-                            visited[adj_vertex] = GREY
-                            queue.append(adj_vertex)
-                        elif self.visited[adj_vertex] == GREY:
-                            circle += 1
-                    visited[vertex] = BLACK
-                return circle == 0
+    1. Edge types are defined by DFS according to the text book
+    2. If u is BLACK and v is next to u, then (u, v) can either be BLACK or GREY
+    3. You can't use distance as a flag because one might have different paths to same node
 
+        .. image:: images/bfs_DAG.png
+
+
+Topological Sort(BFS):
+
+__ https://discuss.leetcode.com/topic/17273/18-22-lines-c-bfs-dfs-solutions
+
+From `solution`__, BFS uses the indegrees of each node. We will first try to find a node with 0 indegree. If we fail to do so, there must be a cycle in the graph and we return false. Otherwise we have found one. We set its indegree to be -1 to prevent from visiting it again and reduce the indegrees of all its neighbors by 1. This process will be repeated for n (number of nodes) times. If we have not returned false, we will return true::
+    
 
