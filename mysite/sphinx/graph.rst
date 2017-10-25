@@ -113,4 +113,46 @@ __ https://discuss.leetcode.com/topic/17273/18-22-lines-c-bfs-dfs-solutions
 
 From `solution`__, BFS uses the indegrees of each node. We will first try to find a node with 0 indegree. If we fail to do so, there must be a cycle in the graph and we return false. Otherwise we have found one. We set its indegree to be -1 to prevent from visiting it again and reduce the indegrees of all its neighbors by 1. This process will be repeated for n (number of nodes) times. If we have not returned false, we will return true::
     
+        class Solution(object):
+            def canFinish(self, numCourses, prerequisites):
+                def buildGraph(graph, numCourses, edgelists):
+                    for i in range(numCourses):
+                        graph[i]
+                    for edge in edgelists:
+                        graph[edge[1]].append(edge[0])
+                    return graph
+                
+                def computeDegrees(graph, numCourses):
+                    indegrees = [0]*numCourses
+                    for values in graph.values():
+                        for vertex in values:
+                            indegrees[vertex]+=1
+                    return indegrees
+                from collections import defaultdict
+                graph = defaultdict(list)
+                graph = buildGraph(graph, numCourses, prerequisites)
+                indegrees = computeDegrees(graph, numCourses)
+                
+                queue = []
+                for i in range(numCourses):
+                    if indegrees[i]==0:
+                        queue.append(i)
+                # there's no vertex with 0 indegree which is a circle
+                if not queue:
+                    return False
+                # you can check the degrees by calling each method, however, queue is most easy to understand following BFS pattern.
+                while queue:
+                    vertex = queue.pop(0)
+                    for adj_vertex in graph[vertex]:
+                        indegrees[adj_vertex] -= 1
+                        if indegrees[adj_vertex] == 0:
+                            queue.append(adj_vertex)
+                
+                return sum(indegrees) == 0
 
+
+
+
+Tarjan's strongly connected components algorithm
+------------------------------------------------------
+https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
