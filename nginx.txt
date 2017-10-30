@@ -5,3 +5,22 @@ b. /etc/apt/sources.list file:
 	deb-src http://nginx.org/packages/ubuntu/ codename nginx
 c. apt-get update
    apt-get install nginx
+
+Note: To see all the files the package installed onto your system, do this:
+
+>>> dpkg-query -L <package_name>
+
+2. Understand the folders:
+	a. /etc/logrotate.d/nginx, it's for log partition
+	b. /etc/nginx/nginx.conf, main configure file
+	c. /etc/nginx/*cgi
+	d. /etc/nginx/mime.types, proxy contetn-type
+	e. /usr/sbin/nginx
+	   /usr/sbin/nginx-debug, basic command
+	d. /var/cache/nginx, cache location
+	f. /var/log/nginx, logs
+
+3. Configuration:
+	a. check the version and settings - nginx -V
+ 		 	
+
