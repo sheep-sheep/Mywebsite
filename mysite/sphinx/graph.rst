@@ -151,7 +151,27 @@ From `solution`__, BFS uses the indegrees of each node. We will first try to fin
                 return sum(indegrees) == 0
 
 
+Topological Sort(DFS):
 
+It's safer to add one more step to calculate the indegrees, then we don't need to worry about the order of input::
+
+        from collections import defaultdict
+        graph = defaultdict(list)
+        graph = buildGraph(graph, 5, [[0,5],[0,4],[2,5],[1,4],[3,2],[1,3]]) #[[1,0], [2,0], [3,1], [4,1], [2, 5]]
+        indegrees = indegrees(graph)
+        visited = [False] * len(graph.keys())
+
+        def dfs(graph, adj_vertex, visited, res):
+            visited[adj_vertex] = True
+            for vertex in graph[adj_vertex]:
+                if not visited[vertex]:
+                    dfs(graph, vertex, visited, res)
+            res.append(adj_vertex)
+        res = []
+        for vertex in graph.keys():
+            if not visited[vertex]:
+                dfs(graph, vertex, visited, res)
+        print res[::-1]
 
 Tarjan's strongly connected components algorithm
 ------------------------------------------------------
