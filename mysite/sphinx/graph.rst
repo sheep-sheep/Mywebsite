@@ -176,3 +176,96 @@ It's safer to add one more step to calculate the indegrees, then we don't need t
 Tarjan's strongly connected components algorithm
 ------------------------------------------------------
 https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+
+
+LeetCode 547. Friend Circles
+--------------------------------
+
+__ https://discuss.leetcode.com/topic/85047/python-simple-explanation
+
+From some source, we can visit every connected node to it with a simple DFS. As is the case with DFS's, seen will keep track of nodes that have been visited.
+
+For every node, we can visit every node connected to it with this DFS, and increment our answer as that represents one friend circle (connected component.)
+
+solution::
+    
+        class Solution(object):
+            def findCircleNum(self, M):
+                """
+                :type M: List[List[int]]
+                :rtype: int
+                """
+                visited = [False]*len(M)
+                count = 0
+                
+                def dfs(M, visited, i):
+                    for j in range(len(M)):
+                        if M[i][j] == 1 and not visited[j]:
+                            visited[j] = True
+                            dfs(M, visited, j)
+                
+                for i in range(len(M)):
+                    if not visited[i]:
+                        dfs(M, visited, i)
+                        count+=1
+                return count   
+
+
+
+LeetCode 675. Cut Off Trees for Golf Event
+----------------------------------------------------
+The question is turned into finding distance between 2 trees. 
+My original approach was to find the paths from (0, 0) to all trees which will be more complex because 
+you don't know how to handle the intermediate step.
+
+In order to implement the distance method, there're 3 algorithms:
+    #. BFS
+    #. A* (Dijkstra's special case)
+    #. Hadlock
+    #. Another trick is 2-direction BFS
+
+Explaination is in sorce code::
+    
+    class Solution(object):
+    def cutOffTree(self, forest):
+        """
+        :type forest: List[List[int]]
+        :rtype: int
+        """
+        # since the tree heights are ordered, we already have an order to cut these trees(have to cut the global min each time)
+        # then we can sort the tree node at the begining.
+        trees = []
+        for i in range(len(forest)):
+            for j in range(len(forest[0])):
+                if forest[i][j] > 1:
+                    trees.append((forest[i][j], i, j))
+        trees = sorted(trees, key=lambda x: x[0])
+
+        def dist(forest, sr, sc, tr, tc):
+            # this array is to help go discover the grid
+            directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+            # we can't maintain a global visited helper map because previous search will
+            # change the trace
+            queue = [(sr, sc, 0)]
+            visited =[[False for _ in range(len(forest[0]))] for __ in range(len(forest))]
+            visited[sr][sc] = True
+            while queue:
+                r, c, d = queue.pop(0)
+                if r == tr and c == tc:
+                    return d
+
+                for dx, dy in directions:
+                    x = r + dx
+                    y = c + dy
+                    if 0 <= x < len(forest) and 0 <= y < len(forest[0]) and forest[x][y] and not visited[x][y]:
+                        queue.append((x, y, d+1))
+                        visited[x][y] = True
+            return -1
+        sr = sc = ans = 0
+        for _, tr, tc in trees:
+            d = dist(forest, sr, sc, tr, tc)
+            if d < 0:
+                return -1
+            ans += d
+            sr, sc = tr, tc
+        return ans
