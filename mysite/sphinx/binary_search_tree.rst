@@ -111,7 +111,7 @@ Height of a empty tree: 0
 
 **Height-balancing requirement**
 A node in a tree is height-balanced if the heights of its subtrees differ by no more than 1. 
-(That is, if the subtrees have heights h1 and h2, then |h1 − h2| ≤ 1.) A tree is height-balanced if all of its nodes are height-balanced. (An empty tree is height-balanced by definition.)
+(That is, if the subtrees have heights h1 and h2, then | h1 − h2 | ≤ 1.) A tree is height-balanced if all of its nodes are height-balanced. (An empty tree is height-balanced by definition.)
 
 **Rotation**
     #. zig-zig: single rotation
