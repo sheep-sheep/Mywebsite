@@ -35,11 +35,9 @@ Notation:
 
 Thoughts:
 
-#. Find the variable::
+#. Find the variable:
         
-        For any supplier i, the unit number is **(N_remain/P[i])*B[i]**; the goal is to find **max(sum((N_remain/P[i])*B[i]))**.
-
-    
+    For any supplier i, the unit number is **(N_remain/P[i])*B[i]**; the goal is to find **max(sum((N_remain/P[i])*B[i]))**.
     From above statement, we can see it's a linear programming problem which can be solved by dynamic programming.
 
 #. Find the last step:
@@ -50,13 +48,28 @@ Thoughts:
 #. Build the relationship:
     |   DP[i][N]
     |   DP[i][j] = max(
-                        1. (j/P[i-1])*B[i-1]
-                        2. DP[i-1][j-P[i-1]] + B[i-1]
+                        1. (j/P[i-1])*B[i-1]  
+                        2. DP[i-1][j-P[i-1]] + B[i-1]  
                         )
 
 
 Sourcecode::
-    
-    #Hello world
 
-    
+        class Solution(object):
+            def knapsack(self, n, bundles, costs):
+                dp = [[0]*(n+1) for _ in range(len(bundles)+1)]
+
+                for i in range(1, len(bundles)+1):
+                    for j in range(1, n+1):
+                        if j >= costs[i-1]:
+                            try:
+                                dp[i][j] = max((j/costs[i-1])*bundles[i-1],
+                                        dp[i-1][j-costs[i-1]]+bundles[i-1]
+                                       )
+                            except IndexError as e:
+                                print i, j
+                tmp = []
+                for row in dp:
+                    tmp.append(row[-1])
+                return max(tmp)
+
