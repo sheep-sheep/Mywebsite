@@ -20,11 +20,25 @@ solution::
 Knapsack problem - 0/1 Knapsack
 -----------------------------------
 
-You are the owner of a local store and you have a budget of N to spend on purchasing goods.
-Different suppliers have different bundle options with different prices. You can buy **only one bundle**from each supplier untill 
-the budget is used off. What's your max units you can get using N budget?
+You are the owner of a local store and you have a budget of N to spend on purchasing goods, different suppliers have different bundle options with different prices. You can buy **only one bundle** from each supplier untill the budget is used off. What's your max units you can get using N budget?
+
 
 This is 0/1 knapsack because you either choose or not.
+
+
+* 可以利用一维的**滚动**数组模拟二维数据
+    
+    另外由于这里由i−1的前面的解j−c[i]推导出i后面的解j，也就是利用一维的数据的话，旧解为前面的解，新解为后面的．
+    那么就应该让j从大到小进行循环遍历，因为这样第一次接触的到为旧解i−1，新出来的新解j在此次遍历也不会再用到．
+
+* 另一个小的常数时间优化
+
+    在利用dfs递归求解时，先将物品按照单位价格排好序，单位价格高的靠前，这样如果某个物品超载时，没必要再累积其后面物品的价格， 而是按照该物品的单位价格乘以剩余容量，这样算出的总价格虽然比实际装载的总价格略高些，如果这样略高于实际值的解还低于当前的最优解，则可对后面剪枝，避免多余的计算．
+
+
+http://www.hawstein.com/posts/dp-knapsack.html
+http://blog.csdn.net/u010106759/article/details/77984537
+
 
 Solution and Explaination::
         
@@ -66,12 +80,13 @@ Solution and Explaination::
 
 
 
-Knapsack problem - 0/1 Knapsack
------------------------------------
+Knapsack problem - Unbounded Knapsack
+--------------------------------------------
+
 
 You are the owner of a local store and you have a budget of N to spend on purchasing goods.
-Different suppliers have different bundle options with different prices. You can buy as many as 
-bundles from each supplier untill the budget is used off. What's your max units you can get using
+Different suppliers have different bundle options with different prices. You can buy **as many as 
+bundles** from each supplier untill the budget is used off. What's your max units you can get using
 N budget?
 
 
@@ -84,24 +99,26 @@ Notation:
 
 Thoughts:
 
-#. Find the variable:
+0/1背包只考虑放与不放进去两种情况，而完全背包要考虑 放0,放1, ···, 放j/w[i] 的情况.
+
+The unbonded problem can be converted to 0/1 knapsack problem::
         
-    For any supplier i, the unit number is **(N_remain/P[i])*B[i]**; the goal is to find **max(sum((N_remain/P[i])*B[i]))**.
-    From above statement, we can see it's a linear programming problem which can be solved by dynamic programming.
+        for i in range(1, len(bundles)+1):
+            for j in range(n, -1, -1):
+                tmp = 0
+                for k in range(1, j/costs[i-1]+1):
+                    tmp = max(tmp, dp[i-1][j-k*costs[i-1]] + bundles[i-1]*k)
+                dp[i][j] = max(tmp, dp[i-1][j])
 
-#. Find the last step:
-    
-    |   with last supplier:     Find the max units with N budget and i suppliers
-    |   without last supplier:  Find the max units with N-P[i] budget and i-1 suppliers
+Above solution's time complexity is O(N*len(B)*sum(k)) which is a little high.
 
-#. Build the relationship:
-    |   DP[i][N]
-    |   DP[i][j] = max(
-                        1. (j/P[i-1])*B[i-1]  
-                        2. DP[i-1][j-P[i-1]] + B[i-1]  
-                        )
+* A simple optimiazation is to add one more check: if costs[i] < costs[i+1] and bundles[i]>bundles[i+1], then we can skip i+1 case.
+
+* Another optimiazation is to divide last item to 0/1 problem using 2 as the base, then the loop goes to O(log(k)) instead of k.
+    这是二进制的思想. 因为, 不管最优策略选几件第 i 种物品, 其件数写成二进制后, 总可以表示成若干个 2^k 件物品的和.
 
 
-Sourcecode::
+
+
 
 
