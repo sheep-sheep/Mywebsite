@@ -118,6 +118,58 @@ Above solution's time complexity is O(N*len(B)*sum(k)) which is a little high.
     这是二进制的思想. 因为, 不管最优策略选几件第 i 种物品, 其件数写成二进制后, 总可以表示成若干个 2^k 件物品的和.
 
 
+In fact, this problem can be coverted to O(N*len(B)), the only difference is::
+    
+        dp[i][j] = max(dp[i-1][j], dp[i][j-costs[i-1]]+bundles[i-1])
+
+Instead of dp[i-1], dp[i] will contain all the possible solutions at i-1 (i'm still confused about this form and haven't found a good way to explain)
+
+Try to understand this, i think it makes sense:
+    dp[i][j-1]+v[i]代表至少放了一个第i种物品, 当然它的前提是能放进去（j>=w[i]）, 所以dp[i][j]=max{dp[i-1][j],dp[i][j-w[i] ]+v[i]}已经涵盖了一个都不放与至少放一个第i种物品的情况了.
+
+http://blog.csdn.net/qq379666774/article/details/17581377
+
+
+
+
+LeetCode 123. Best Time to Buy and Sell Stock III
+--------------------------------------------------------
+
+This is a standard DP solution, i think the hardest part to come up with the DP helper array,
+
+**DP[i][j] means the profit you have at j with i transactions**
+
+The state function is simple and you need to use the temp variable to reduce complexity::
+
+        def maxProfit_0(self, prices):
+            # This solution gets TLE error, i need to reduce the complexity
+            k = 2 # at most 2 transactions, however, if k/2 > len(prices), that means you can get all the profits.
+            dp = [[0]*(len(prices)+1) for _ in range(k+1)]
+            for i in range(1, k+1):
+                for j in range(1, len(prices)+1):
+                    tmpProfit = 0
+                    for pos in range(1, j):
+                        tmpProfit = max(tmpProfit, prices[j-1]-prices[pos-1]+dp[i-1][pos])
+                    dp[i][j] = max(dp[i][j-1], tmpProfit)
+            beautiful_print(dp)
+            return dp[-1][-1]
+
+        def maxProfit(self, prices):
+            # the 3rd inner loop to check each position and find max profit is unnecessary
+            # we can try to use a tmp variable to reduce the time complexity
+            k = 2
+            dp = [[0] * (len(prices) + 1) for _ in range(k + 1)]
+            for i in range(1, k+1):
+                tmpMaxProfit = dp[i - 1][0] - prices[0]
+                for j in range(1, len(prices)+1):
+                    # dp[i][j-1]: without transaction at last price
+                    # prices[j-1] + (dp[i-1][j] - prices[j-1]): last transaction at last price
+                    # tmpMaxProfit = dp[i-1][j-1] - prices[j-1]: use one variable to reduce the loop
+                    dp[i][j] = max(dp[i][j - 1], prices[j-1] + tmpMaxProfit)
+                    tmpMaxProfit = max(tmpMaxProfit, dp[i - 1][j-1] - prices[j-1])
+            return dp[-1][-1]
+
+
 
 
 
