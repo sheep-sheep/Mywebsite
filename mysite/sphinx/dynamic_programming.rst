@@ -172,5 +172,50 @@ The state function is simple and you need to use the temp variable to reduce com
 
 
 
+Leetcode 53. Maximum Subarray            
+------------------------------------
+
+This is a very basic problem which can be used to help you understand the following concepts:
+    # Divide and Conquer
+    # DP solution
+    # DP solution with minimum space complexity
+
+
+DP Solution::
+        
+        dp = [0]*(len(nums)+1)
+        for i in range(1, len(nums)+1):
+            dp[i] = max(dp[i-1], dp[i-1]+nums[i-1]) 
+        return dp[-1]
+
+This is my initial thought, however, this equation doesn't meet the requirement of continous subarray.
+Keeping the condition in mind then we can reformat the condition a little bit:
+    | DP[i] means the maximum subarray that **ends at position i**
+
+The code should look like this::
+    
+        def maxSubArray(self, nums):
+            dp = [float('-inf')]*(len(nums)+1)
+            for i in range(1, len(nums)+1):
+                dp[i] = max(nums[i-1], dp[i-1]+nums[i-1]) 
+            return max(dp)
+
+If you want to reduce the space complexity, you can replace the DP array with 2 variables.
+Optimized DP solution::
+
+        def maxSubArray(self, nums):
+            maxEnding = float('-inf')
+            globalMax = float('-inf')
+            for i in range(len(nums)):
+                maxEnding = max(nums[i], maxEnding+nums[i])
+                globalMax = max(globalMax, maxEnding)
+            return globalMax
+
+
+https://discuss.leetcode.com/topic/6413/dp-solution-some-thoughts
+https://discuss.leetcode.com/topic/4175/share-my-solutions-both-greedy-and-divide-and-conquer
+
+
+
 
 
