@@ -130,3 +130,59 @@ You have to master the most used techniques and be able to apply them on
             * Iterative
 
 
+
+
+Level Order Traversal of Binary Tree
+---------------------------------------
+
+DFS::
+
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return []
+        def recursive(res, root, level):
+            if not root:
+                return
+            if level < len(res):
+                res[level].append(root.val)
+            else:
+                res.append([root.val])
+            recursive(res, root.left, level+1)
+            recursive(res, root.right, level+1)
+        res = []
+        recursive(res, root, 0)
+        return res[::-1]
+
+
+
+BFS::
+    
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return []
+        final = []
+        queue = []
+        queue.append(root)
+        while queue:
+            res = []
+            # we have queue and we need to get each level
+            # this is done by get the size of queue which is the size of the level
+            n = len(queue)
+            while(n):
+                node = queue.pop(0)    
+                res.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+                n -= 1
+            final.append(res)
+        return final[::-1]
