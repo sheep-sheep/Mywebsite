@@ -3,9 +3,219 @@ Coding Questions - Dynamic Programming
 
 LeetCode 691. Stickers to Spell Word
 -------------------------------------------
-    *:First thought should be how to solve it using navie method
-    *:2nd thought should be able to find some recusion pattern
-    *:3rd thought should be able to come up with DP optimization
+    * First thought should be how to solve it using navie method
+
+    * 2nd thought should be able to find some recusion pattern
+
+    * 3rd thought should be able to come up with DP optimization
+
 
 solution::
     
+    #hello world
+
+
+
+
+Knapsack problem - 0/1 Knapsack
+-----------------------------------
+
+You are the owner of a local store and you have a budget of N to spend on purchasing goods, different suppliers have different bundle options with different prices. You can buy **only one bundle** from each supplier untill the budget is used off. What's your max units you can get using N budget?
+
+
+This is 0/1 knapsack because you either choose or not.
+
+
+* 可以利用一维的**滚动**数组模拟二维数据
+    
+    另外由于这里由i−1的前面的解j−c[i]推导出i后面的解j，也就是利用一维的数据的话，旧解为前面的解，新解为后面的．
+    那么就应该让j从大到小进行循环遍历，因为这样第一次接触的到为旧解i−1，新出来的新解j在此次遍历也不会再用到．
+
+* 另一个小的常数时间优化
+
+    在利用dfs递归求解时，先将物品按照单位价格排好序，单位价格高的靠前，这样如果某个物品超载时，没必要再累积其后面物品的价格， 而是按照该物品的单位价格乘以剩余容量，这样算出的总价格虽然比实际装载的总价格略高些，如果这样略高于实际值的解还低于当前的最优解，则可对后面剪枝，避免多余的计算．
+
+
+http://www.hawstein.com/posts/dp-knapsack.html
+http://blog.csdn.net/u010106759/article/details/77984537
+
+
+Solution and Explaination::
+        
+        class Solution(object):
+            def knapsack(self, n, bundles, costs):
+                # this is a 0/1 knapsack problem, we can only choose True/False once for each position.
+                # dp[i][j] means the max bundles when we have i choices with j costs.
+                dp = [[0]*(n+1) for _ in range(len(bundles)+1)]
+
+                for i in range(1, len(bundles)+1):
+                    for j in range(1, n+1):
+                        if j >= costs[i-1]:
+                            dp[i][j] = max(dp[i-1][j], dp[i-1][j-costs[i-1]]+bundles[i-1])
+                print dp
+                return dp[-1][-1]
+
+            # although we can compress the space complexity but the time complexity keeps the same
+            # therefore we still have 2 loops.
+            def knapsack_1(self, n, bundles, costs):
+                # dp[j] means the max bundles when we have i choices with j costs.
+                dp = [0]*(n+1)
+
+                for i in range(1, len(bundles)+1):
+                    # each time when we have dp, it keeps last states which is i-1
+                    # Since we have dp[j-costs[i-1]] part, i-1 status will be lost if we update it first,
+                    # we need to do it from the end to the front.
+                    for j in range(n, -1, -1):
+                        if j >= costs[i-1]:
+                            dp[j] = max(dp[j], dp[j-costs[i-1]]+bundles[i-1])
+                return dp[-1]
+
+        def beautiful_print(data):
+            if type(data) is list and type(data[0]):
+                for value in data:
+                    print value
+
+        print Solution().knapsack_1(38, [3, 5, 4], [10, 20, 16])
+
+
+
+
+Knapsack problem - Unbounded Knapsack
+--------------------------------------------
+
+
+You are the owner of a local store and you have a budget of N to spend on purchasing goods.
+Different suppliers have different bundle options with different prices. You can buy **as many as 
+bundles** from each supplier untill the budget is used off. What's your max units you can get using
+N budget?
+
+
+Notation:
+    |   Budget          : N = 50  
+    |   BundleUnits     : B = [5, 15, 20]  
+    |   BundlePrice     : P = [5, 10, 15]  
+    |   MaxUnit         : t = (50/10)*15=75  
+
+
+Thoughts:
+
+0/1背包只考虑放与不放进去两种情况，而完全背包要考虑 放0,放1, ···, 放j/w[i] 的情况.
+
+The unbonded problem can be converted to 0/1 knapsack problem::
+        
+        for i in range(1, len(bundles)+1):
+            for j in range(n, -1, -1):
+                tmp = 0
+                for k in range(1, j/costs[i-1]+1):
+                    tmp = max(tmp, dp[i-1][j-k*costs[i-1]] + bundles[i-1]*k)
+                dp[i][j] = max(tmp, dp[i-1][j])
+
+Above solution's time complexity is O(N*len(B)*sum(k)) which is a little high.
+
+* A simple optimiazation is to add one more check: if costs[i] < costs[i+1] and bundles[i]>bundles[i+1], then we can skip i+1 case.
+
+* Another optimiazation is to divide last item to 0/1 problem using 2 as the base, then the loop goes to O(log(k)) instead of k.
+    这是二进制的思想. 因为, 不管最优策略选几件第 i 种物品, 其件数写成二进制后, 总可以表示成若干个 2^k 件物品的和.
+
+
+In fact, this problem can be coverted to O(N*len(B)), the only difference is::
+    
+        dp[i][j] = max(dp[i-1][j], dp[i][j-costs[i-1]]+bundles[i-1])
+
+Instead of dp[i-1], dp[i] will contain all the possible solutions at i-1 (i'm still confused about this form and haven't found a good way to explain)
+
+Try to understand this, i think it makes sense:
+    dp[i][j-1]+v[i]代表至少放了一个第i种物品, 当然它的前提是能放进去（j>=w[i]）, 所以dp[i][j]=max{dp[i-1][j],dp[i][j-w[i] ]+v[i]}已经涵盖了一个都不放与至少放一个第i种物品的情况了.
+
+http://blog.csdn.net/qq379666774/article/details/17581377
+
+
+
+
+LeetCode 123. Best Time to Buy and Sell Stock III
+--------------------------------------------------------
+
+This is a standard DP solution, i think the hardest part to come up with the DP helper array,
+
+**DP[i][j] means the profit you have at j with i transactions**
+
+The state function is simple and you need to use the temp variable to reduce complexity::
+
+        def maxProfit_0(self, prices):
+            # This solution gets TLE error, i need to reduce the complexity
+            k = 2 # at most 2 transactions, however, if k/2 > len(prices), that means you can get all the profits.
+            dp = [[0]*(len(prices)+1) for _ in range(k+1)]
+            for i in range(1, k+1):
+                for j in range(1, len(prices)+1):
+                    tmpProfit = 0
+                    for pos in range(1, j):
+                        tmpProfit = max(tmpProfit, prices[j-1]-prices[pos-1]+dp[i-1][pos])
+                    dp[i][j] = max(dp[i][j-1], tmpProfit)
+            beautiful_print(dp)
+            return dp[-1][-1]
+
+        def maxProfit(self, prices):
+            # the 3rd inner loop to check each position and find max profit is unnecessary
+            # we can try to use a tmp variable to reduce the time complexity
+            k = 2
+            dp = [[0] * (len(prices) + 1) for _ in range(k + 1)]
+            for i in range(1, k+1):
+                tmpMaxProfit = dp[i - 1][0] - prices[0]
+                for j in range(1, len(prices)+1):
+                    # dp[i][j-1]: without transaction at last price
+                    # prices[j-1] + (dp[i-1][j] - prices[j-1]): last transaction at last price
+                    # tmpMaxProfit = dp[i-1][j-1] - prices[j-1]: use one variable to reduce the loop
+                    dp[i][j] = max(dp[i][j - 1], prices[j-1] + tmpMaxProfit)
+                    tmpMaxProfit = max(tmpMaxProfit, dp[i - 1][j-1] - prices[j-1])
+            return dp[-1][-1]
+
+
+
+
+Leetcode 53. Maximum Subarray            
+------------------------------------
+
+This is a very basic problem which can be used to help you understand the following concepts:
+    # Divide and Conquer
+    # DP solution
+    # DP solution with minimum space complexity
+
+
+DP Solution::
+        
+        dp = [0]*(len(nums)+1)
+        for i in range(1, len(nums)+1):
+            dp[i] = max(dp[i-1], dp[i-1]+nums[i-1]) 
+        return dp[-1]
+
+This is my initial thought, however, this equation doesn't meet the requirement of continous subarray.
+Keeping the condition in mind then we can reformat the condition a little bit:
+    | DP[i] means the maximum subarray that **ends at position i**
+
+The code should look like this::
+    
+        def maxSubArray(self, nums):
+            dp = [float('-inf')]*(len(nums)+1)
+            for i in range(1, len(nums)+1):
+                dp[i] = max(nums[i-1], dp[i-1]+nums[i-1]) 
+            return max(dp)
+
+If you want to reduce the space complexity, you can replace the DP array with 2 variables.
+Optimized DP solution::
+
+        def maxSubArray(self, nums):
+            maxEnding = float('-inf')
+            globalMax = float('-inf')
+            for i in range(len(nums)):
+                maxEnding = max(nums[i], maxEnding+nums[i])
+                globalMax = max(globalMax, maxEnding)
+            return globalMax
+
+
+https://discuss.leetcode.com/topic/6413/dp-solution-some-thoughts
+https://discuss.leetcode.com/topic/4175/share-my-solutions-both-greedy-and-divide-and-conquer
+
+
+
+
+

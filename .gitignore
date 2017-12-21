@@ -49,6 +49,7 @@ coverage.xml
 
 # Sphinx documentation
 mysite/sphinx/_build/
+mysite/sphinx/images/
 
 
 # Virtual env

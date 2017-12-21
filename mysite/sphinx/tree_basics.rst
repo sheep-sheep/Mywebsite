@@ -179,3 +179,113 @@ Basic Tree Operations:
                         n -= 1
                     final.append(res)
                 return final
+
+
+    #. Morris Traversal
+        ?????
+
+
+class Codec_0:
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        if not root:
+            return ''
+
+        queue = [root]
+        res = []
+        while queue:
+            node = queue.pop(0)
+            if node != None:
+                res.append(node.val)
+                queue.append(node.left)
+                queue.append(node.right)
+            else:
+                res.append('None')
+        return '['+ ', '.join(res)+']'
+
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        data = data.strip('[]{}').split(',')
+        if not data:
+            return None
+        root = TreeNode(data[0])
+        queue = [root]
+        i = 0
+        while i < len(data) and queue:
+            node = queue.pop(0)
+            if i + 1 < len(data) and data[i+1] != 'None':
+                node.left = TreeNode(data[i+1])
+                queue.append(node.left)
+            if i + 2 < len(data) and data[i + 2] != 'None':
+                node.right = TreeNode(data[i+2])
+                queue.append(node.right)
+            i += 2
+        return root
+
+
+class Codec:
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        if not root:
+            return ''
+
+        stack = [root]
+        res = []
+
+        while stack:
+            while root:
+                res.append(root.val)
+                stack.append(root)
+                root = root.left
+
+            res.append('None')
+            node = stack.pop()
+            if not node:
+                res.append('None')
+            else:
+                root = node.right
+
+        return '['+ ', '.join(res)+']'
+
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        data = data.strip('[]{}').split(',')
+        if not data:
+            return None
+        root = TreeNode(data[0])
+        stack = [root]
+        x= stack[-1]
+        i = 1
+        while i < len(data):
+            while i < len(data) and data[i] != 'None':
+                root.left = TreeNode(data[i])
+                root = root.left
+                stack.append(root)
+                i += 1
+            while i < len(data) and data[i] == 'None' and stack:
+                root = stack.pop()
+                i += 1
+            if i < len(data):
+                root.right = TreeNode(data[i])
+                root = root.right
+                stack.append(root)
+                i += 1
+        return x        
