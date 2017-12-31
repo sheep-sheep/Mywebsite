@@ -336,13 +336,13 @@ We have 2 Iterative ways to do the traversal:
             :type root: TreeNode
             """
             self.visit = root
-            self.stack = [root]
+            self.stack = []
 
         def hasNext(self):
             """
             :rtype: bool
             """
-            return len(self.stack) != 0
+            return len(self.stack) != 0 or self.visit
 
         def next(self):
             """
@@ -387,3 +387,89 @@ If you want the tree to be balanced, then always choose the mid value as the roo
                     return node
                 return helper(nums, 0, len(nums)-1)
                 
+
+
+
+Summary
+----------------------
+1. Use recursion is the first thought direction
+2. Use a global variable to record the accumulated results
+3. Without return state is easier to write the code
+4. Don't forget the break state
+5. You can switch between DFS, BFS and recursion.
+
+# def invertTree(self, root):
+#     """
+#     :type root: TreeNode
+#     :rtype: TreeNode
+#     """
+#     if not root:
+#         return None
+#     root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+#     return root
+
+LeetCode 285. Inorder Successor in BST
+--------------------------------------------------
+
+Solutions::
+
+        def inorderSuccessor(self, root, p):
+            """
+            :type root: TreeNode
+            :type p: TreeNode
+            :rtype: TreeNode
+            """
+            succ = None
+            while root:
+                if p.val < root.val:
+                    succ = root
+                    root = root.left
+                else:
+                    root = root.right
+            return succ
+        def inorderSuccessor(self, root, p):
+            if not root:
+                return None
+            if root.val <= p.val:
+                return self.inorderSuccessor(root.right, p)
+            else:
+                left = self.inorderSuccessor(root.left, p)
+            return left or root
+
+
+
+LeetCode 199. Binary Tree Right Side View            
+-------------------------------------------------
+
+BFS solution::
+
+        class Solution(object):
+            def rightSideView(self, root):
+                """
+                :type root: TreeNode
+                :rtype: List[int]
+                """
+                if not root:
+                    return []
+                
+                queue = [root]
+                res = []
+                while queue:
+                    n = len(queue)
+                    tmp = []
+                    while n:
+                        node = queue.pop(0)
+                        tmp.append(node.val)
+                        n -= 1
+                        if node.left:
+                            queue.append(node.left)
+                        if node.right:
+                            queue.append(node.right)
+                    res.append(tmp[-1])
+
+                return res
+
+
+Level Order Traversal::
+        
+                    

@@ -157,7 +157,17 @@ DFS::
         recursive(res, root, 0)
         return res[::-1]
 
-
+    1.    TreeNode visit = root;
+          Stack<TreeNode> stack = new Stack();
+    2.    while (visit != null || !stack.empty()) {
+    3.        while (visit != null) {
+                  stack.push(visit);
+                  visit = visit.left;
+              }
+              TreeNode next = stack.pop();
+              visit = next.right;
+              doSomethingWith(next.val);
+          }
 
 BFS::
     
