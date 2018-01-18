@@ -82,3 +82,7 @@ The expected solution::
                 reverseInPlace(nums, k, len(nums)-1)
 
 
+
+
+Tip:
+1. 2 pointers can accelerate the search on a sorted array.

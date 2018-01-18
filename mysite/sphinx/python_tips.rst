@@ -100,3 +100,13 @@ Built-In
 
 
 https://docs.python.org/2/library/functions.html#sorted
+
+
+Set
+----------------------
+    * discard
+        >>> a = {3,4,5,6,7,4,5}
+        >>> a.discard(6)
+        >>> print a
+        >>> {3, 4, 5, 7}
+

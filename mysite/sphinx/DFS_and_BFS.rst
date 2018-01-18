@@ -196,3 +196,46 @@ BFS::
                 n -= 1
             final.append(res)
         return final[::-1]
+
+
+A*::
+
+
+Tip
+----------------
+1. when you want to update the matrix, remember to update all the vertices
+    better to use a paradigm
+    for v in vertices:
+        do dfs or bfs
+
+2. Do a BFS on multiple sources
+    push every node into queue        
+
+3. It's different between Inorder Traversal and a simple DFS, and you can tell from the way stack method is implemented
+::
+        # InOrder Traverse Stack
+        def traverse_stack(root):
+            stack = []
+            res = []
+            while(True):
+                while(root):
+                    stack.append(root)
+                    root = root.left
+                if not stack:
+                    return res
+                node = stack.pop()
+                res.append(node.val)
+                root = node.right
+            return res
+
+        # PreOrder
+        def traverse_stack(root):
+            res = []
+            stack = [root]
+            while stack:
+                node, path = stack.pop()
+                res.append(node.val)
+                if node.left:
+                    stack.append(node.left)
+                if node.right:
+                    stack.append(node.right)

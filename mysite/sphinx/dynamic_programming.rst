@@ -131,9 +131,41 @@ http://blog.csdn.net/qq379666774/article/details/17581377
 
 
 
+LeetCode 121. Best Time to Buy and Sell Stock
+-------------------------------------------------
+If you were only permitted to complete at most one transaction::
+        # you can get max profix using one transaction in O(n)
+        class Solution(object):
+            def maxProfit(self, prices):
+                buy = float('inf')
+                sell = 0
+                for i in range(len(prices)):
+                    buy = min(buy, prices[i])
+                    sell = max(sell, prices[i]-buy)
+                return sell
+                    
 
-LeetCode 123. Best Time to Buy and Sell Stock III
---------------------------------------------------------
+
+
+LeetCode 122. Best Time to Buy and Sell Stock II
+-------------------------------------------------------
+You may complete as many transactions as you like::
+
+        class Solution(object):
+            def maxProfit(self, prices):
+                # the idea is to capture every profit.
+                # you can sell and buy immediately at the same day
+                profit = 0
+                for i in range(1, len(prices)):
+                    if prices[i]>prices[i-1]:
+                        profit += prices[i]-prices[i-1]
+                
+                return profit
+
+
+
+LeetCode 123. Best Time to Buy and Sell Stock III and IV
+------------------------------------------------------------
 
 This is a standard DP solution, i think the hardest part to come up with the DP helper array,
 
@@ -141,34 +173,35 @@ This is a standard DP solution, i think the hardest part to come up with the DP 
 
 The state function is simple and you need to use the temp variable to reduce complexity::
 
-        def maxProfit_0(self, prices):
-            # This solution gets TLE error, i need to reduce the complexity
-            k = 2 # at most 2 transactions, however, if k/2 > len(prices), that means you can get all the profits.
-            dp = [[0]*(len(prices)+1) for _ in range(k+1)]
-            for i in range(1, k+1):
-                for j in range(1, len(prices)+1):
-                    tmpProfit = 0
-                    for pos in range(1, j):
-                        tmpProfit = max(tmpProfit, prices[j-1]-prices[pos-1]+dp[i-1][pos])
-                    dp[i][j] = max(dp[i][j-1], tmpProfit)
-            beautiful_print(dp)
-            return dp[-1][-1]
-
-        def maxProfit(self, prices):
-            # the 3rd inner loop to check each position and find max profit is unnecessary
-            # we can try to use a tmp variable to reduce the time complexity
-            k = 2
-            dp = [[0] * (len(prices) + 1) for _ in range(k + 1)]
-            for i in range(1, k+1):
-                tmpMaxProfit = dp[i - 1][0] - prices[0]
-                for j in range(1, len(prices)+1):
-                    # dp[i][j-1]: without transaction at last price
-                    # prices[j-1] + (dp[i-1][j] - prices[j-1]): last transaction at last price
-                    # tmpMaxProfit = dp[i-1][j-1] - prices[j-1]: use one variable to reduce the loop
-                    dp[i][j] = max(dp[i][j - 1], prices[j-1] + tmpMaxProfit)
-                    tmpMaxProfit = max(tmpMaxProfit, dp[i - 1][j-1] - prices[j-1])
-            return dp[-1][-1]
-
+        class Solution(object):
+            def maxProfit(self, prices):
+                if len(prices) < 2:
+                    return 0
+                # the 3rd inner loop to check each position and find max profit is unnecessary
+                # we can try to use a tmp variable to reduce the time complexity
+                k = 2
+                if len(prices) < 2:
+            return 0
+                # k is big enougth to cover all ramps.
+                if k >= len(prices) / 2:
+                    return sum(i - j for i, j in zip(prices[1:], prices[:-1]) if i - j > 0)
+                dp = [[0] * (len(prices) + 1) for _ in range(k + 1)] # this means the max profit with k transctions.
+                for i in range(1, k+1):
+                    # initial
+                    tmpMaxProfit = dp[i - 1][0] - prices[0] # use this varaible to get the profit at each transctions
+                    for j in range(1, len(prices)+1):
+                        # dp[i][j]  1> dp[i][j-1]
+                        #           2> for m in range(j-1]:
+                        #                   prices[j-1] + dp[i-1][m] - prices[m]
+                        # Explaination: 1> we used up all transactions before last stock
+                                        2> we leave the last transaction to j-1, we need to find the 
+                        
+                        # Trick is, the prev buy choice could be any price before j-1, thus you have to check or find the max local
+                        # and that would be your new value, then use tmpMaxProfit
+                        # tmpMaxProfit = dp[i-1][j-1] - prices[j-1]: use one variable to reduce the loop
+                        dp[i][j] = max(dp[i][j - 1],  tmpMaxProfit + prices[j-1])
+                        tmpMaxProfit = max(tmpMaxProfit, dp[i - 1][j-1] - prices[j-1]) # initial for next level
+                return dp[-1][-1]
 
 
 
