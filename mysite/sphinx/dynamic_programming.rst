@@ -204,6 +204,75 @@ The state function is simple and you need to use the temp variable to reduce com
                 return dp[-1][-1]
 
 
+LeetCode 309. Best Time to Buy and Sell Stock with Cooldown
+--------------------------------------------------------------------
+
+Don't worry, you can try to use the Brute Force to solve it first::
+
+        class Solution(object):
+            def maxProfit(self, prices):
+                # Solution 1:
+                # enumerate all the possible solutions and check for the max value
+                # Each position has 3 ways to do: O(3**n)
+                
+                # Solution 2:
+                # Record max PROFIT value for each state
+                # hold[i] = max(hold[i-1], res[i-1]-prices[i]) - hold previous or buy current
+                # sold[i] = hold[i-1] + prices[i] - sell current
+                # rest[i] = max(res[i-1], sold[i-1])
+                # return max(sold[i], rest[i])
+                sold = 0
+                rest = 0        
+                hold = float('-inf')
+                for price in prices:
+                    prev = sold
+                    hold = max(hold, rest-price)
+                    sold = hold + price
+                    rest = max(rest, prev)
+                return max(rest, sold)
+                # Solution 3:
+                # Record max PROFIT value for each state
+                # sell[i] - PROFIT when sell at day i
+                # cooldown[i] - PROFIT when day i is cooldown
+                if not prices or len(prices)<2:
+                    return 0
+                
+                n = len(prices)
+                sell = [0]*n
+                cool = [0]*n
+                sell[1] = prices[1]-prices[0]
+                for i in range(2, n):
+                    cool[i] = max(sell[i-1], cool[i-1])
+                    sell[i] = prices[i] - prices[i-1] + max(sell[i-1], cool[i-2])
+                return max(sell[-1], cool[-1])
+
+
+
+LeetCode 714. Best Time to Buy and Sell Stock with Transaction Fee
+-----------------------------------------------------------------------
+Solution::
+
+        class Solution(object):
+            def maxProfit(self, prices, fee):
+                # Solution 1:
+                # enumerate all the possible solutions and check for the max value
+                # Each position has 2 ways to do: O(2**n)
+                
+                # Solution 2:
+                # Similar to with cooldown problem, we can use 2 arrays to record the state.
+                # buy[i] - PROFIT when we buy at day i BUY or NOT
+                # sell[i] - PROFIT when we sell at day i SELL or NOT
+                
+                buy = [0] * len(prices)
+                sell = [0] * len(prices)
+                
+                buy[0] = - prices[0]
+                sell[0] = 0
+                
+                for i in range(1, len(prices)):
+                    buy[i] = max(sell[i-1]-prices[i], buy[i-1]) # you have to sell before buy
+                    sell[i] = max(buy[i-1]+prices[i]-fee, sell[i-1])
+                return sell[-1]
 
 Leetcode 53. Maximum Subarray            
 ------------------------------------
