@@ -98,6 +98,9 @@ Built-In
             >>> d.items()
             [('blue', [2, 4]), ('red', [1]), ('yellow', [1, 3])]
 
+    * rfind::
+        >>> 'helllllo'.rfind('l')
+        >>> 6
 
 https://docs.python.org/2/library/functions.html#sorted
 
@@ -109,4 +112,9 @@ Set
         >>> a.discard(6)
         >>> print a
         >>> {3, 4, 5, 7}
+    * intersection
+        >>> a = {1,2,3,4}
+        >>> b = {2,3}
+        >>> a.intersection(b)
+        >>> {2, 3}
 
