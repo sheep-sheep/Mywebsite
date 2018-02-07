@@ -114,6 +114,7 @@ Solution::
                 def helper(path, choices, res):
                     res.append(path)
                     for i in range(len(choices)):
+                        # add condition here to handle duplicate
                         helper(path + [choices[i]], choices[i+1:], res)
                 
                 nums.sort()
@@ -121,7 +122,25 @@ Solution::
                 helper([], nums, res)
                 return res       
 
-        # Backtracking         
+        # Backtracking
+            # After i checked the script, this approach is just to save space,
+            # the idea is still similar to DFS solution.
+
+            # But the idea differs a little, this one will go back to last step and get another step to check further
+            # while DFS is to get all the next step and check further
+
+            def subsets_backtracking(self, nums):
+                from copy import copy
+                def backtrack(res, path, nums, idx):
+                    res.append(copy(path))
+                    for i in range(idx, len(nums)):
+                        path.append(nums[i])
+                        backtrack(res, path, nums, i+1)
+                        path.pop()
+                res = []
+                nums.sort()
+                backtrack(res, [], nums, 0)
+                return res         
 
 LeetCode 39. Combination Sum
 

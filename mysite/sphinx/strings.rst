@@ -85,3 +85,19 @@ Then the final relationship will be::
                 dp[i] += dp[i-2]
         return dp[-1]
 
+String Pattern Search
+=====================================
+
+After deal with so many string problems, we can take a look at several classic as well as brilliant algorithms.
+
+1. Brute Force
+    Check the pattern at each position
+2. Knuth-Morris-Pratt
+    Use a Determinitic Finite state Automation
+3. Boyer-Moore
+    Skip the checked position
+4. Rabin-Karp
+    Use hash function to encode the pattern
+
+If you want to find some common characteristics, that's to avoid back up as much as possible!
+
