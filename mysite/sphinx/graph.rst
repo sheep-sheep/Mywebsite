@@ -269,3 +269,9 @@ Explaination is in sorce code::
             ans += d
             sr, sc = tr, tc
         return ans
+
+
+LeetCode 269. Alien Dictionary
+-------------------------------------
+
+When you are asked to get some kind of orders, think about Topological sort, but you first need to convert the question to a graph problem.
