@@ -92,8 +92,12 @@ After deal with so many string problems, we can take a look at several classic a
 
 1. Brute Force
     Check the pattern at each position
+
 2. Knuth-Morris-Pratt
-    Use a Determinitic Finite state Automation
+    There 2 ways to implement KMP: 
+        1) using DFA to build a state table
+        2) using prefix function to build a table based on pattern itself!
+    
 3. Boyer-Moore
     Skip the checked position
 4. Rabin-Karp

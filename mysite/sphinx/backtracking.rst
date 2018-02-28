@@ -1,56 +1,58 @@
 Coding Questions - BackTracking
-===========================
+=========================================
 **BackTracking** is a coding pattern to solve the combination and permuation problems; Backtracking is a way to solve computational problems, wwhich incremently build candiates and abandon partial candidate(from wiki).
 
 2018-02-04:
 You don't need to treat the backtracking differently, in fact, it's just a DFS!!!??
 
 If you have a clear way/rule to build the result set, then you already have a recusive solution, just need to handle 2 cases:
-    #. base case
-    #. the dividing case
+    # base case
+    # the dividing case
 
 I need a set of questions to understand the flow of this method::
-    def perm(s):
-        # this permutation can't handle duplicates
-        if len(s)==1:
-            return [s]
-        res = []
-        for i in range(len(s)):
-            for tmp in perm(s[:i]+s[i+1:]):
-                res.append(s[i]+tmp)
-        return res
 
-    # This is a different thinking process!!!!
+        def perm(s):
+            # this permutation can't handle duplicates
+            if len(s)==1:
+                return [s]
+            res = []
+            for i in range(len(s)):
+                for tmp in perm(s[:i]+s[i+1:]):
+                    res.append(s[i]+tmp)
+            return res
 
-    def permute(self, nums):
-        # permutation means at each index, you have n choices to get the number
-        # and in total you have factorial of N choices
-        
-        # recurisve way
-        def helper(tmp, choices, res):
-            if not choices:
-                res.append(tmp)
-                return
-            for i in range(len(choices)):
-                helper(tmp+[choices[i]], choices[:i]+choices[i+1:], res)
-        if not nums:
-            return []
-        res = []
-        helper([], nums, res)
-        return res
+        # This is a different thinking process!!!!
 
-    def combine(s):
-        if len(s)==1:
-            return [s]
-        res = []
-        for i in range(len(s)):
-            res.append([s[i]])
-            for tmp in combine(s[:i]+s[i+1:]):
-                res.append([s[i]]+tmp)
-        return res
+        def permute(self, nums):
+            # permutation means at each index, you have n choices to get the number
+            # and in total you have factorial of N choices
+            
+            # recurisve way
+            def helper(tmp, choices, res):
+                if not choices:
+                    res.append(tmp)
+                    return
+                for i in range(len(choices)):
+                    helper(tmp+[choices[i]], choices[:i]+choices[i+1:], res)
+            if not nums:
+                return []
+            res = []
+            helper([], nums, res)
+            return res
+
+        def combine(s):
+            if len(s)==1:
+                return [s]
+            res = []
+            for i in range(len(s)):
+                res.append([s[i]])
+                for tmp in combine(s[:i]+s[i+1:]):
+                    res.append([s[i]]+tmp)
+            return res
 
 
 LeetCode 257 Binary Tree Paths
+---------------------------------------
 
 This question is to use the DFS traversal, it's still a little different than Backtracking problems.
 
@@ -74,6 +76,7 @@ Recursive Solution::
 
                 dfs(root, paths, res)
                 return res
+
 
 
 The trick for stack is to save the previous result in to the stack it's obvious if you think about the recursion, it doesn't only save the function call but also the results of each call.
@@ -101,8 +104,10 @@ Iterative Solutions::
 
 
 LeetCode 78. Subsets
+------------------------------
 
 Solution::
+
         # DFS/Recursion
         class Solution(object):
             def subsets(self, nums):
@@ -142,7 +147,9 @@ Solution::
                 backtrack(res, [], nums, 0)
                 return res         
 
+
 LeetCode 39. Combination Sum
+-----------------------------------------
 
 Similar idea with permutation and subset, the trick is to know the time to 
     #. terminate the recursion, for this question it's when target is smaller than 0.
@@ -169,3 +176,14 @@ Solutions::
                 candidates.sort()
                 helper([], target, candidates, res)
                 return res
+
+
+
+LeetCode 288. Unique Word Abbreviation
+----------------------------------------
+LeetCode 320. Generalized Abbreviation
+----------------------------------------
+LeetCode 408. Valid Word Abbreviation
+----------------------------------------
+LeetCode 411. Minimum Unique Word Abbreviation
+------------------------------------------------
