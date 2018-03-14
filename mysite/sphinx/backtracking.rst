@@ -50,6 +50,31 @@ I need a set of questions to understand the flow of this method::
                     res.append([s[i]]+tmp)
             return res
 
+        def combine_1(s):
+            def helper(s, k, path, res):
+                if len(path) == k:
+                    res.append(path)
+                    return
+                for i in range(len(s)):
+                    helper(s[:i] + s[i + 1:], k, path + s[i], res)
+
+            res = []
+            for i in range(len(s)+1):
+                helper(s, i, '', res)
+            return res
+
+
+        def combine_2(s):
+            def helper(s, path, res):
+                res.append(path)
+                for i in range(len(s)):
+                    helper(s[i + 1:], path + s[i], res)
+
+            res = []
+            helper(s, '', res)
+            return res
+
+
 
 LeetCode 257 Binary Tree Paths
 ---------------------------------------
@@ -147,6 +172,7 @@ Solution::
                 backtrack(res, [], nums, 0)
                 return res         
 
+        # Backtrack IS DFS we don't even need to use copy method
 
 LeetCode 39. Combination Sum
 -----------------------------------------

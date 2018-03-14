@@ -259,6 +259,64 @@ is a really good exercise for the Tree-Node structure::
     [Ref] https://leetcode.com/problems/implement-trie-prefix-tree/discuss/
 
 
+03/12/2018 just use a dict to implement it::
+
+        class Trie(object):
+            def __init__(self):
+                """
+                Initialize your data structure here.
+                """
+                self.root = {}
+
+            def insert(self, word):
+                """
+                Inserts a word into the trie.
+                :type word: str
+                :rtype: void
+                """
+                tmp = self.root
+                for w in word:
+                    if w not in tmp:
+                        tmp[w] = {}
+                    tmp = tmp[w]
+                tmp['#'] = {}
+
+            def search(self, word):
+                """
+                Returns if the word is in the trie.
+                :type word: str
+                :rtype: bool
+                """
+                tmp = self.root
+                for w in word:
+                    if w not in tmp:
+                        return False
+                    else:
+                        tmp = tmp[w]
+                return '#' in tmp
+
+            def startsWith(self, prefix):
+                """
+                Returns if there is any word in the trie that starts with the given prefix.
+                :type prefix: str
+                :rtype: bool
+                """
+                tmp = self.root
+                for w in prefix:
+                    if w in tmp:
+                        tmp = tmp[w]
+                    else:
+                        return False
+                return True
+
+
+A python trick::
+
+        def _trie():
+            return defaultdict(_trie)
+
+
+
 LeetCode 110. Balanced Binary Tree
 ----------------------------------------------
 
