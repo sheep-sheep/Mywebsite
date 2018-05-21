@@ -28,14 +28,14 @@
 # needs_sphinx = '1.0'
 
 # A fix from https://github.com/sphinx-doc/sphinx/issues/2436
-import sys
-import sphinx
-from sphinx.errors import VersionRequirementError
+# import sys
+# import sphinx
+# from sphinx.errors import VersionRequirementError
 
-needs_sphinx = '1.3.6'
-if needs_sphinx > sphinx.__display_version__:
-    message = 'This project needs at least Sphinx v%s' % needs_sphinx
-    raise VersionRequirementError(message)
+# needs_sphinx = '1.3.6'
+# if needs_sphinx > sphinx.__display_version__:
+#     message = 'This project needs at least Sphinx v%s' % needs_sphinx
+#     raise VersionRequirementError(message)
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
