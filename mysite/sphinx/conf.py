@@ -32,7 +32,7 @@ import sys
 import sphinx
 from sphinx.errors import VersionRequirementError
 
-needs_sphinx = '1.4'
+needs_sphinx = '1.3.6'
 if needs_sphinx > sphinx.__display_version__:
     message = 'This project needs at least Sphinx v%s' % needs_sphinx
     raise VersionRequirementError(message)
