@@ -3,19 +3,44 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Yang's Blog!
+It's a Note of Interview Questions!
 ===============================================
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
-   homepage 
-   python_tips
-   strings
+   computer_basics
+   
+   tree_basics
+   binary_search_tree
+   segment_tree
+
+   graph
+   DFS_and_BFS
+   graph_advanced
+
    numbers
-   cheatsheet
+   strings
+   arrays
+   linked_list
+   palindrome_string
+   
+   sort
+   Iterator
+
+   dynamic_programming
+   house_robber
+
+   backtracking
+   path_sum
+   leetcode
+   design
+
+   high_frequency_problems
+   python_tips
    thoughts
+
 
 Indices
 ==================
