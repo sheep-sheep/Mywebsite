@@ -1,5 +1,109 @@
 Coding Questions - Dynamic Programming
 =========================================
+General DP solution steps:
+1. Think in a divide and conquer way
+2. Each sub-step should have overlap between each other
+3. Build an eqaution between current step's optimum solution and prev's solution
+
+**solution have optimal substructure and overlapped subproblems**
+
+
+#. Wild Card Match
+    *. Recursive Thinking
+        Base Case
+        ? Case
+        * Case which needs to build solution recursively
+
+    *. Once you have Recursive Solution, you can either
+        Use memoization to improve time complexity
+        Use DP to imporove time complexity
+
+    *. T(n) = T(n-1) + T(n-2) --> O(2**n)
+
+    We can reduce the time complexity to polynomial time O(mn)!
+#. Frog Jump
+    Same as above solution, you can build recursive solution first!
+#. Unique Ways
+    *. DP: Build one DP and find the relationship between last step and last-1 step
+    *. Combination: There're M+N steps, and we know we will get to the final states, as long as we perform M right move and N down move.
+                    Then we can use combination to solve the problem.
+
+#. House Robber
+    Solution::
+            # Recursive
+            class Solution(object):
+                def rob(self, nums):
+                    """
+                    :type nums: List[int]
+                    :rtype: int
+                    """
+                    self.money = 0
+                    
+                    def helper(idx, nums, curr, robbed):
+                        if idx == len(nums):
+                            self.money = max(self.money, curr)
+                            return
+                        if not robbed:
+                            helper(idx+1, nums, curr+nums[idx], True)
+                            helper(idx+1, nums, curr, False)
+                        else:
+                            helper(idx+1, nums, curr, False)
+                    
+                    helper(0, nums, 0, True)
+                    helper(0, nums, 0, False)
+                    return self.money
+
+                # DP
+                def rob(self, nums):
+                    """
+                    :type nums: List[int]
+                    :rtype: int
+                    """
+                    dp = [0]*(len(nums)+1)
+                    for i in range(1, len(nums)+1):
+                        dp[i] = max(dp[i-1], dp[i-2]+nums[i-1])
+                    
+                    return dp[-1]
+
+    Robber II:
+        max(rob_line(nums[:-1]), rob_line(nums[1:]))
+
+
+
+
+
+#. Win or Lose
+#. Longest Subsequence
+    *. Find the recursive structure first
+    *. Convert it into dynamic programming paradigm
+
+#. Panlindromic string
+    When it comes to panlindromic string, think in a recursive way, you can check it layer by layer.
+    And when build the DP solution, inner loop is from bottom to the top because of DP[i+1][j-1]
+
+#. Buy and Sell Stocks
+    *. If you get a diff array, that's maxium sub-array problem which can be solved in DP or Divide and Conquer
+    *. We can build a 2 Dimensional DP, trick is we don't know how's 1st transaction like thus we need to have additional for loop to check this::
+            # This is also a great example to reduce time complexity.
+            class Solution(object):
+                def maxProfit(self, prices):
+                    k = 2 # at most 2 transactions
+                    dp = [[0]*(len(prices)+1) for _ in range(k+1)]
+
+                    for i in range(1, k+1):
+                        for j in range(1, len(prices)+1):
+                            tmpProfit = 0
+                            for pos in range(1, j):
+                                tmpProfit = max(tmpProfit, prices[j-1]-prices[pos-1]+dp[i-1][pos])
+                            dp[i][j] = max(dp[i][j-1], tmpProfit)
+                    return dp[-1][-1]
+#. Maximum subarray problem
+
+#. Knapsack problem
+#. Build Stairs
+#. Fibonacci
+
+
 
 LeetCode 691. Stickers to Spell Word
 -------------------------------------------
@@ -78,6 +182,16 @@ Solution and Explaination::
         print Solution().knapsack_1(38, [3, 5, 4], [10, 20, 16])
 
 
+        # Below solution is wrong because i didn't consider the ordering!
+        def knapsack_new(self, n, bundles, costs):
+            dp =[(0, 0) for i in range(len(bundles)+1)]
+
+            for i in range(1, len(bundles)+1):
+                if n-dp[i-1][1] >= costs[i-1]:
+                    dp[i] = (dp[i-1][0]+bundles[i-1], dp[i-1][1]+costs[i-1]) if dp[i-1][0]+bundles[i-1] > dp[i-1][0] else dp[i-1]
+                else:
+                    dp[i] = dp[i-1]
+            return dp[-1][0]
 
 
 Knapsack problem - Unbounded Knapsack
