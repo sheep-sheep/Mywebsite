@@ -85,3 +85,55 @@ swap
 5. path symbols:
 ./config
 ../config,
+2018.10.10 Wednesday
+
+1. man man
+2. info info
+3. nano
+4. shutdown, reboot
+5. drwxrwxrwx, 777
+6. chgrp, chmod, chown
+7. FHS标准建议：根目录(/)所在分割槽应该越小越好， 且应用程序所安装的软件最好不要与根目录放在同一个分割槽内，保持根目录越小越好。 如此不但效能较佳，根目录所在的文件系统也较不容易发生问题
+
+FHS Definition:
+/ (root, 根目录)：与开机系统有关；
+/usr (unix software resource)：与软件安装/执行有关；
+/var (variable)：与系统运作过程有关。
+
+Besides above 3 main folders:
+/boot:  这个目录主要在放置开机会使用到的文件，包括Linux核心文件以及开机选单与开机所需配置文件等等。 Linux kernel常用的档名为：vmlinuz (与开机相关的还有Grub)
+/bin:   /bin放置的是在单人维护模式下还能够被操作的指令
+/dev:   装置与接口设备都是以文件的型态存在于这个目录当中
+/etc:   系统主要的配置文件几乎都放置在这个目录内，例如人员的账号密码文件、 各种服务的启始档
+/sbin:  放在/sbin底下的为开机过程中所需要的，里面包括了开机、修复、还原系统所需要的指令
+
+/lib:   放置的则是在开机时会用到的函式库， 以及在/bin或/sbin底下的指令会呼叫的函式库
+/home:  系统默认的用户家目录(home directory)
+/opt:   第三方协力软件放置的目录
+/root:  系统管理员(root)的家目录
+/srv:   service 数据
+/tmp:   使用者或者是正在执行的程序暂时放置文件的地方
+/proc:  本身是一个『虚拟文件系统(virtual filesystem)』喔！他放置的数据都是在内存当中， 例如系统核心、行程信息(process)、周边装置的状态及网络状态
+
+8. 
+/usr:   安装时占用大量空间
+/var：   系统执行时逐渐占用空间
+
+9.
+网络文件常常提到类似『./run.sh』之类的数据，这个指令的意义为何？
+答：
+由于指令的执行需要变量(bash章节才会提到)的支持，若你的执行文件放置在本目录，并且本目录并非正规的执行文件目录(/bin, /usr/bin等为正规)，此时要执行指令就得要严格指定该执行档。『./』代表『本目录』的意思，所以『./run.sh』代表『执行本目录下， 名为run.sh的文件
+
+10. 相对路径与绝对路径
+
+11. 目录的相关操作
+.         代表此层目录
+..        代表上一层目录
+-         代表前一个工作目录
+~         代表『目前使用者身份』所在的家目录
+~account  代表 account 这个使用者的家目录(account是个帐号名称)
+
+cd：变换目录(Change Directory)
+pwd：显示目前的目录(Print Working Directory)
+mkdir：创建一个新的目录
+rmdir：删除一个空的目录
