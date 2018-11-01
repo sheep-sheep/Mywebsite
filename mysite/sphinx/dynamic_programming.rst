@@ -308,7 +308,10 @@ The state function is simple and you need to use the temp variable to reduce com
                         #           2> for m in range(j-1]:
                         #                   prices[j-1] + dp[i-1][m] - prices[m]
                         # Explaination: 1> we used up all transactions before last stock
-                                        2> we leave the last transaction to j-1, we need to find the 
+                                        2> we leave the last transaction to j-1, we need to find the max profit we can make within (1, j-1]
+
+                        # Since we are already checking all positions and 2> can be transformed to prices[j-1] + {dp[i-1] - prices[m]} for m in range(1, j)
+                        # Then we can reduce the for loop to one variable.
                         
                         # Trick is, the prev buy choice could be any price before j-1, thus you have to check or find the max local
                         # and that would be your new value, then use tmpMaxProfit
