@@ -568,3 +568,69 @@ batch：系统有空时才进行背景任务
 所以也就是说，当 CPU 的工作负载越大，代表 CPU 必须要在不同的工作之间进行频繁的工作切换。 这样的 CPU 运行情况我们在第零章有谈过，忘记的话请回去瞧瞧！因为一直切换工作，所以会导致系统忙碌啊！ 系统如果很忙碌，还要额外进行 at ，不太合理！所以才有 batch 命令的产生！
 
 
+Boot Process, MBR and Loader
+
+简单来说，系统启动的经过可以汇整成底下的流程的：
+
+加载 BIOS 的硬件资讯与进行自我测试，并依据配置取得第一个可启动的装置；
+读取并运行第一个启动装置内 MBR 的 boot Loader (亦即是 grub, spfdisk 等程序)；
+依据 boot loader 的配置加载 Kernel ，Kernel 会开始侦测硬件与加载驱动程序；
+在硬件驱动成功后，Kernel 会主动呼叫 init 程序，而 init 会取得 run-level 资讯；
+init 运行 /etc/rc.d/rc.sysinit 文件来准备软件运行的作业环境 (如网络、时区等)；
+init 运行 run-level 的各个服务之启动 (script 方式)；
+init 运行 /etc/rc.d/rc.local 文件；
+init 运行终端机模拟程序 mingetty 来启动 login 程序，最后就等待使用者登陆啦；
+
+核心与核心模块
+谈完了整个启动的流程，您应该会知道，在整个启动的过程当中，是否能够成功的驱动我们主机的硬件配备， 是核心 (kernel) 的工作！而核心一般都是压缩档，因此在使用核心之前，就得要将他解压缩后， 才能加载主内存当中。
+
+另外，为了应付日新月异的硬件，目前的核心都是具有『可读取模块化驱动程序』的功能， 亦即是所谓的『 modules (模块化)』的功能啦！所谓的模块化可以将他想成是一个『外挂程序』， 该外挂程序可能由硬件开发厂商提供，也有可能我们的核心本来就支持～不过，较新的硬件， 通常都需要硬件开发商提供驱动程序模块啦！
+
+
+Boot Loader:
+
+MBR 是整个硬盘的第一个 sector 内的一个区块，充其量整个大小也才 446 bytes 而已。 我们的 loader 功能这么强，光是程序码与配置数据不可能只占不到 446 bytes 的容量吧？那如何安装？
+
+为了解决这个问题，所以 Linux 将 boot loader 的程序码运行与配置值加载分成两个阶段 (stage) 来运行：
+
+Stage 1：运行 boot loader 主程序：
+第一阶段为运行 boot loader 的主程序，这个主程序必须要被安装在启动区，亦即是 MBR 或者是 boot sector 。但如前所述，因为 MBR 实在太小了，所以，MBR 或 boot sector 通常仅安装 boot loader 的最小主程序， 并没有安装 loader 的相关配置档；
+
+Stage 2：主程序加载配置档：
+第二阶段为透过 boot loader 加载所有配置档与相关的环境参数文件 (包括文件系统定义与主要配置档 menu.lst)， 一般来说，配置档都在 /boot 底下。
+那么这些配置档是放在哪里啊？这些与 grub 有关的文件都放置到 /boot/grub 中，那我们就来看看有哪些文件吧
+
+
+initrd 的重要性与创建新 initrd 文件
+
+我们在本章稍早之前『 boot loader 与 kernel 加载』的地方已经提到过 initrd 这玩意儿，他的目的在於提供启动过程中所需要的最重要核心模块，以让系统启动过程可以顺利完成。 会需要 initrd 的原因，是因为核心模块放置於 /lib/modules/$(uname -r)/kernel/ 当中， 这些模块必须要根目录 (/) 被挂载时才能够被读取。但是如果核心本身不具备磁碟的驱动程序时， 当然无法挂载根目录，也就没有办法取得驱动程序，因此造成两难的地步。
+
+initrd 可以将 /lib/modules/.... 内的『启动过程当中一定需要的模块』包成一个文件 (档名就是 initrd)， 然后在启动时透过主机的 INT 13 硬件功能将该文件读出来解压缩，并且 initrd 在内存内会模拟成为根目录， 由於此虚拟文件系统 (Initial RAM Disk) 主要包含磁碟与文件系统的模块，因此我们的核心最后就能够认识实际的磁碟， 那就能够进行实际根目录的挂载啦！所以说：『initrd 内所包含的模块大多是与启动过程有关，而主要以文件系统及硬盘模块 (如 usb, SCSI 等) 为主』的啦！
+
+
+The ls command, or even TAB-completion or wildcard expansion by the shell, will normally present their results in alphanumeric order. This requires reading the entire directory listing and sorting it. With ten million files in a single directory, this sorting operation will take a non-negligible amount of time.
+
+If you can resist the urge of TAB-completion and e.g. write the names of files to be zipped in full, there should be no problems.
+
+tune2fs has an option called dir_index that tends to be turned on by default (on Ubuntu it is) that lets you store roughly 100k files in a directory before you see a performance hit. That is not even close to the 10m files you are thinking about.
+
+ext filesystems have a fixed maximum number of inodes. Every file and directory uses 1 inode. Use df -i for a view of your partitions and inodes free. When you run out of inodes you can not make new files or folders.
+
+commands like rm and ls when using wildcards expand the command and will end up with a "argument list too long". You will have to use find to delete or list files. And find tends to be slow.
+
+
+2018.11.07
+
+To understand the problem of why Ctrl + C does not work, it is very helpful to understand what happens when you press it:
+
+Most shells bind Ctrl + C to "send a SIGINT signal to the program that currently runs in the foreground". You can read about the different signals via man signal:
+
+ SIGINT        2       Term    Interrupt from keyboard
+Programs can ignore that signal, as they can ignore SIGTSTP as well:
+
+ SIGTSTP   18,20,24    Stop    Stop typed at tty
+(Which is what most shells do when you press Ctrl + Z, which is why it is not guaranteed to work.)
+
+There are some signals which can not be ignored by the process: SIGKILL, SIGSTOP and some others. You can send these signals via the kill command. So, to kill your hanging / zombieying process, just find the process ID (PID). For example, use pgrep or ps and then kill it:
+
+ % kill -9 PID

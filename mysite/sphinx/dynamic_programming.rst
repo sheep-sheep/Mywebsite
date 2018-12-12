@@ -315,9 +315,9 @@ The state function is simple and you need to use the temp variable to reduce com
                         
                         # Trick is, the prev buy choice could be any price before j-1, thus you have to check or find the max local
                         # and that would be your new value, then use tmpMaxProfit
-                        # tmpMaxProfit = dp[i-1][j-1] - prices[j-1]: use one variable to reduce the loop
+                        # tmpMaxProfit = dp[i-1][j] - prices[j-1]: use one variable to reduce the loop
                         dp[i][j] = max(dp[i][j - 1],  tmpMaxProfit + prices[j-1])
-                        tmpMaxProfit = max(tmpMaxProfit, dp[i - 1][j-1] - prices[j-1]) # initial for next level
+                        tmpMaxProfit = max(tmpMaxProfit, dp[i - 1][j] - prices[j-1]) # initial for next level
                 return dp[-1][-1]
 
 
