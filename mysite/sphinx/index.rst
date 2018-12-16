@@ -10,37 +10,38 @@ It's a Note of Interview Questions!
    :maxdepth: 1
    :caption: Contents:
 
+   cheatsheet
    computer_basics
-   
-   tree_basics
-   binary_search_tree
-   segment_tree
+   design
+   LearnLinux
+   linux_questions
+   python_tips
+   thoughts 
 
-   graph
-   DFS_and_BFS
-   graph_advanced
-
-   numbers
+   sort
    strings
    arrays
+   numbers
    linked_list
-   palindrome_string
-   
-   sort
-   Iterator
-
-   dynamic_programming
-   house_robber
-
    backtracking
    path_sum
+   dynamic_programming
+   basic_calculator
+   tree_basics
+   binary_search_tree
+   graph
+   graph_advanced
+   DFS_and_BFS
+
    leetcode
-   design
-
+   intervals
+   Iterator
    high_frequency_problems
-   python_tips
-   thoughts
-
+   palindrome_string
+   segment_tree
+   substring_sliding_window
+   house_robber
+   
 
 Indices
 ==================
