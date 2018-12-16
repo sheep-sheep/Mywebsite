@@ -1,5 +1,51 @@
 SubString Searching Problem with Sliding Window Solutions
 ===============================================================
+A sliding window is an abstract concept commonly used in array/string problems. A window is a range of elements in the array/string which usually defined by the start and end indices, i.e. [i, j)[i,j) (left-closed, right-open). A sliding window is a window "slides" its two boundaries to the certain direction. For example, if we slide [i, j)[i,j) to the right by 11 element, then it becomes [i+1, j+1)[i+1,j+1) (left-closed, right-open).
+
+LeetCode 3. Longest Substring Without Repeating Characters
+---------------------------------------------------------------------          
+Solution::        
+        class Solution(object):
+            def lengthOfLongestSubstring(self, s):
+                s = list(s)
+                helper = {}
+                begin = 0
+                end = 0
+                count = 0
+                maxLen = 0
+                while end < len(s):
+                    if s[end] not in helper:
+                        helper[s[end]] = 1
+                    else:
+                        helper[s[end]] += 1
+                        count += 1
+                    end += 1
+                    while count > 0:
+                        if helper[s[begin]] > 1:
+                            count -= 1
+                        helper[s[begin]] -= 1
+                        if helper[s[begin]] == 0:
+                            del helper[s[begin]]
+                        begin += 1
+                    maxLen = max(maxLen, end - begin)
+                return maxLen  
+
+        class Solution(object):
+            def lengthOfLongestSubstring(self, s):
+                maxLen = 0
+                i = j = 0
+                visited = set()
+                while i < len(s) and j < len(s):
+                    if s[j] not in visited:
+                        visited.add(s[j])
+                        j += 1
+                        maxLen = max(maxLen, len(visited))
+                    else:
+                        visited.discard(s[i])
+                        i+= 1
+                return maxLen  
+        # In fact, it could be optimized to require only n steps. Instead of using a set to tell if a character exists or not, we could define a mapping of the characters to its index. Then we can skip the characters immediately when we found a repeated character.
+
 
 LeetCode 438. Find All Anagrams in a String
 ---------------------------------------------
@@ -115,38 +161,6 @@ Solution::
 
 LeetCode 424. Longest Repeating Character Replacement
 ----------------------------------------------------------
-
-
-
-LeetCode 3. Longest Substring Without Repeating Characters
----------------------------------------------------------------------          
-Solution::
-        
-        class Solution(object):
-            def lengthOfLongestSubstring(self, s):
-                s = list(s)
-                helper = {}
-                begin = 0
-                end = 0
-                count = 0
-                maxLen = 0
-                while end < len(s):
-                    if s[end] not in helper:
-                        helper[s[end]] = 1
-                    else:
-                        helper[s[end]] += 1
-                        count += 1
-                    end += 1
-                    
-                    while count > 0:
-                        if helper[s[begin]] > 1:
-                            count -= 1
-                        helper[s[begin]] -= 1
-                        if helper[s[begin]] == 0:
-                            del helper[s[begin]]
-                        begin += 1
-                    maxLen = max(maxLen, end - begin)
-                return maxLen  
 
 
 LeetCode 424. Longest Repeating Character Replacement
