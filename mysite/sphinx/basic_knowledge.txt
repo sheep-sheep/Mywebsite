@@ -1,0 +1,112 @@
+
+1. Index is for Columns
+You can build a tree index for any group of columns (a string, an integer, 2 strings, an integer and a string, a date …) as long as you have a function to compare the keys (i.e. the group of columns) so that you can establish an order among the keys (which is the case for any basic types in a database).
+
+2. In order to do Range Query
+
+B+Tree Index
+Although this tree works well to get a specific value, there is a BIG problem when you need to get multiple elements between two values. It will cost O(N) because you’ll have to look at each node in the tree and check if it’s between these 2 values (for example, with an in-order traversal of the tree). Moreover this operation is not disk I/O friendly since you’ll have to read the full tree. We need to find a way to efficiently do a range query. To answer this problem, modern databases use a modified version of the previous tree called B+Tree
+
+The big difference is that the lowest nodes are linked to their successors.
+
+3. What if Delete
+
+
+4. Hash table and Hash Join
+Concept:
+Given a (key, value) pair, hash table is data structure which converts the key to an index and then store the value somewhere using that index.
+
+
+The real challenge is to find a good hash function that will create buckets that contain a very small amount of elements. The best situation is it provides a uniform distribution of hash values.
+
+Time Avg: O(1)
+Time Worst: O(n)
+Space Avg: power of 2
+Delete:
+“Lazy Delete” – Just mark the items as inactive rather
+than removing it.
+
+Resizing: enlarge the array and insert in to the array
+
+Collision resolusion:
+1. Open Addressing
+    1) Linear Probing: find next available slot
+        Bad when there's clustering
+    2) quadratic probing
+2. Chaining
+    A list of keys that map to the same value
+
+With an array you have to use a contiguous space in memory. If you’re loading a large table it’s very difficult to have enough contiguous space.
+With a hash table you can choose the key you want
+
+5. Database is divided into multiple components that interact with each other.
+The process manager
+The network manager
+File system manager: Disk I/O is the first bottleneck of a database
+The memory manager
+Security Manager
+Client manager
+
+Tools:
+Backup manager
+Recovery manager
+Monitor manager
+Administration manager
+
+6. Statistics
+They’re using a minimum unit called a page or a block (4 or 8 kilobytes by default). This means that if you only need 1 Kbytes it will cost you one page anyway. If the page takes 8 Kbytes then you’ll waste 7 Kbytes.
+
+预读的长度一般为页（page）的整倍数。页是计算机管理存储器的逻辑块，硬件及操作系统往往将主存和磁盘存储区分割为连续的大小相等的块，每个存储块称为一页（在许多操作系统中，页得大小通常为4k），主存和磁盘以页为单位交换数据。当程序要读取的数据不在主存中时，会触发一个缺页异常，此时系统会向磁盘发出读盘信号，磁盘会找到数据的起始位置并向后连续读取一页或几页载入内存中，然后异常返回，程序继续运行。
+
+
+Concept
+1. Overriding vs. Overloading
+
+Here are some important facts about Overriding and Overloading:
+
+1). The real object type in the run-time, not the reference variable's type, determines which overridden method is used at runtime. In contrast, reference type determines which overloaded method will be used at compile time.
+2). Polymorphism applies to overriding, not to overloading.
+3). Overriding is a run-time concept while overloading is a compile-time concept.
+
+Master Thearom
+----------------------
+The # of sub problems, The # of recusive call, The # of other operation, together determine the cost of T(N)
+
+1. T(N) = T(N/2) + O(1)     O(log(N))       Binary Search
+2. T(N) = 2T(N/2) + O(1)    O(N)            Binary Tree Traversal
+3. T(N) = 2T(N/2) + O(n)    O(Nlog(N))      Merge Sort
+
+
+
+Good Hash Function
+-------------------------
+In Java, the hash code for a String object is computed as
+
+s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
+
+Primes are unique numbers. They are unique in that, the product of a prime with any other number has the best chance of being unique (not as unique as the prime itself of-course) due to the fact that a prime is used to compose it. This property is used in hashing functions.
+
+Given a string “Samuel”, you can generate a unique hash by multiply each of the constituent digits or letters with a prime number and adding them up. This is why primes are used.
+
+
+Bloom Filter
+---------------------
+Lightweight of Hashtable
+1) Array of n bits
+2) k hash functions (IP address to bits)
+
+Insert: set 1 (k hash functions)
+Lookup: look for 1 (k hash functions)
+
+Pro:
+Space Efficient
+
+Con:
+Doesn't store value/pointer -- it can only answer membership queries.
+Can't do deletion
+False Positive
+
+Application:
+1. Early spellcheckers
+2. List of forbidden passwords
+3. Network Routers
