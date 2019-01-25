@@ -4,7 +4,8 @@ A sliding window is an abstract concept commonly used in array/string problems. 
 
 LeetCode 3. Longest Substring Without Repeating Characters
 ---------------------------------------------------------------------          
-Solution::        
+Solution::
+
         class Solution(object):
             def lengthOfLongestSubstring(self, s):
                 s = list(s)
@@ -90,6 +91,7 @@ Solution::
 
 LeetCode 76. Minimum Window Substring
 ----------------------------------------------                
+Solution::
 
         class Solution(object):
             def minWindow(self, s, t):
@@ -167,6 +169,7 @@ LeetCode 424. Longest Repeating Character Replacement
 ----------------------------------------------------------
 
 Solution::
+
         class Solution(object):
             def characterReplacement(self, s, k):
                 """
